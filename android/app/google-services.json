@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "242217690971",
+    "project_id": "van-vihar-quiz",
+    "storage_bucket": "van-vihar-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242217690971:android:f2dfffb9644f91b6995c7e",
+        "android_client_info": {
+          "package_name": "com.ayushman.van_vihar_quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242217690971-2f90dl143td3ogh60nom9klj37s9af0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3fxFCTYe_dKVYi4hYM_5kP0MGrNSiqu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242217690971-2f90dl143td3ogh60nom9klj37s9af0h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "242217690971-59s2vchm137e23gc957qj5968e2vvm4s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.questionsaddingapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242217690971:android:90af31af247a5787995c7e",
+        "android_client_info": {
+          "package_name": "com.mycompany.questionsaddingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242217690971-d0gldr7k767h7p869fclqb30dvoar0lm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.questionsaddingapp",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "242217690971-2f90dl143td3ogh60nom9klj37s9af0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3fxFCTYe_dKVYi4hYM_5kP0MGrNSiqu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242217690971-2f90dl143td3ogh60nom9klj37s9af0h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "242217690971-59s2vchm137e23gc957qj5968e2vvm4s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.questionsaddingapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
