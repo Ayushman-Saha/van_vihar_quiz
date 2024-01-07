@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/firebase_options.dart';
+import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/splashScreen.dart';
 
 Future<void> main() async {
@@ -17,9 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        scaffoldBackgroundColor: backgroundBlue,
+        primaryColor: backgroundBlue,
       ),
-      home: const SplashScreen(),
+      initialRoute: SplashScreen.id,
+      routes: {
+        SplashScreen.id: (context) => const SplashScreen(),
+        OnboardingScreen.id: (context) => const OnboardingScreen()
+      },
     );
   }
 }
