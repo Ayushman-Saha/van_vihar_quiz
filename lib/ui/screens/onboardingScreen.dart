@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:van_vihar_quiz/constants.dart';
+import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
+import 'package:van_vihar_quiz/utils/authUtils.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -53,8 +56,14 @@ class OnboardingScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     MaterialButton(
-                      onPressed: () {
+                      onPressed: () async {
                         //TODO:Implement login with Google
+                        UserCredential credential = await signInWithGoogle();
+                        // print(credential.user);
+                        if (credential.user != null) {
+                          await Navigator.of(context).pushNamedAndRemoveUntil(
+                              StartScreen.id, (route) => false);
+                        }
                         // print("Hello World");
                       },
                       height: 60.0,

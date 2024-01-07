@@ -4,6 +4,7 @@ import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/firebase_options.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/splashScreen.dart';
+import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashScreen.id,
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
-        OnboardingScreen.id: (context) => const OnboardingScreen()
+        OnboardingScreen.id: (context) => const OnboardingScreen(),
+        StartScreen.id: (context) => const StartScreen()
       },
     );
   }
