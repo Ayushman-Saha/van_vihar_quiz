@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:van_vihar_quiz/constants.dart';
+import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/quizScreen.dart';
 
 class StartScreen extends StatefulWidget {
@@ -65,19 +67,44 @@ class _StartScreenState extends State<StartScreen> {
             Expanded(
               child: Column(
                 children: [
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(QuizScreen.id);
-                    },
-                    height: 60.0,
-                    minWidth: 300.0,
-                    color: buttonBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(QuizScreen.id);
+                      },
+                      height: 60.0,
+                      minWidth: 300.0,
+                      color: buttonBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Text(
+                        "Start",
+                        style: buttonTextStyle,
+                      ),
                     ),
-                    child: Text(
-                      "Start",
-                      style: buttonTextStyle,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        await GoogleSignIn().signOut();
+                        // await GoogleSignIn().disconnect();
+                        await Navigator.of(context).pushNamedAndRemoveUntil(
+                            OnboardingScreen.id, (route) => false);
+                      },
+                      height: 60.0,
+                      minWidth: 300.0,
+                      color: buttonBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Text(
+                        "Sign Out",
+                        style: buttonTextStyle,
+                      ),
                     ),
                   ),
                 ],
