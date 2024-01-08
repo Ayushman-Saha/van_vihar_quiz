@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/firebase_options.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
+import 'package:van_vihar_quiz/ui/screens/quizScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/splashScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
         OnboardingScreen.id: (context) => const OnboardingScreen(),
-        StartScreen.id: (context) => const StartScreen()
+        StartScreen.id: (context) => const StartScreen(),
+        QuizScreen.id: (context) => const QuizScreen()
       },
     );
   }

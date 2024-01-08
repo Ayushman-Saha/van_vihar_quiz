@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 import 'package:van_vihar_quiz/utils/authUtils.dart';
@@ -38,11 +37,7 @@ class OnboardingScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Lorem ipsum diam volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec",
-                        style: GoogleFonts.poppins(
-                          color: textWhite,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                        ),
+                        style: bodyTextStyle,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -57,7 +52,6 @@ class OnboardingScreen extends StatelessWidget {
                   children: [
                     MaterialButton(
                       onPressed: () async {
-                        //TODO:Implement login with Google
                         UserCredential credential = await signInWithGoogle();
                         // print(credential.user);
                         if (credential.user != null) {

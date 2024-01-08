@@ -16,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    //TODO: Check for user presence. If yes, navigate directly to score or start screen
 
     Timer(
       const Duration(seconds: 2),
