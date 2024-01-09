@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/ui/composables/answerRadioButton.dart';
 
 import '../../controller/quizController.dart';
+import '../composables/answerDescription.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -18,7 +20,9 @@ class _QuizScreenState extends State<QuizScreen> {
   var controller = QuizController();
   late Stopwatch stopwatch;
   late Timer t;
-  bool isChecked = false;
+
+  bool isAttempted = false;
+  bool isValidated = false;
 
   List<TileStatus> status = [
     TileStatus.UNSELECTED,
@@ -26,8 +30,6 @@ class _QuizScreenState extends State<QuizScreen> {
     TileStatus.UNSELECTED,
     TileStatus.UNSELECTED
   ];
-
-  bool enabled = true;
 
   @override
   void initState() {
@@ -106,55 +108,108 @@ class _QuizScreenState extends State<QuizScreen> {
                             ],
                           ),
                         ),
-                        AnswerRadioButton(
-                          quizController: controller,
-                          answerChoices:
-                              controller.currentQuestion.answerChoices,
-                          correctAnswer:
-                              controller.currentQuestion.correctAnswer,
-                          answerType: controller.currentQuestion.answerType,
-                          status: status,
-                          enabled: enabled,
-                        ),
+                        (!isAttempted)
+                            ? AnswerRadioButton(
+                                quizController: controller,
+                                answerChoices:
+                                    controller.currentQuestion.answerChoices,
+                                correctAnswer:
+                                    controller.currentQuestion.correctAnswer,
+                                answerType:
+                                    controller.currentQuestion.answerType,
+                                status: status,
+                                enabled: (!isAttempted && !isValidated),
+                              )
+                            : AnswerDescription(
+                                quizController: controller,
+                              ),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Column(
                       children: [
-                        MaterialButton(
-                          onPressed: () {
-                            setState(() {
-                              int correctIndex = controller.validateAnswer();
-                              if (controller.selectedIndex != correctIndex) {
-                                status[correctIndex] = TileStatus.CORRECT;
-                                status[controller.selectedIndex] =
-                                    TileStatus.INCORRECT;
-                              } else {
-                                status[controller.selectedIndex] =
-                                    TileStatus.CORRECT;
-                              }
-                              // controller.nextQuestion();
-                              enabled = false;
-                            });
-                            // print(controller.currentQuestionSelectedAnswer);
-                          },
-                          height: 60,
-                          minWidth: 250,
-                          color: buttonBlue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: (!isChecked)
-                              ? Text(
+                        (!isAttempted && !isValidated)
+                            ? MaterialButton(
+                                onPressed: () {
+                                  if (controller.currentQuestionSelectedAnswer
+                                      .isNotEmpty) {
+                                    stopwatch.stop();
+                                    setState(() {
+                                      int correctIndex =
+                                          controller.validateAnswer();
+                                      if (controller.selectedIndex !=
+                                          correctIndex) {
+                                        status[correctIndex] =
+                                            TileStatus.CORRECT;
+                                        status[controller.selectedIndex] =
+                                            TileStatus.INCORRECT;
+                                      } else {
+                                        status[controller.selectedIndex] =
+                                            TileStatus.CORRECT;
+                                      }
+                                      // controller.nextQuestion();
+                                      isValidated = true;
+                                    });
+                                  } else {
+                                    Fluttertoast.showToast(
+                                      msg: "Select an option to continue",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                    );
+                                  }
+                                  // print(controller.currentQuestionSelectedAnswer);
+                                },
+                                height: 60,
+                                minWidth: 250,
+                                color: buttonBlue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
                                   "Check Answer",
                                   style: buttonTextStyle,
-                                )
-                              : Text(
-                                  "Next",
-                                  style: buttonTextStyle,
                                 ),
-                        ),
+                              )
+                            : (isValidated && !isAttempted)
+                                ? MaterialButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isAttempted = true;
+                                      });
+
+                                      // print(controller.currentQuestionSelectedAnswer);
+                                    },
+                                    height: 60,
+                                    minWidth: 250,
+                                    color: buttonBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Text(
+                                      "See Solution",
+                                      style: buttonTextStyle,
+                                    ),
+                                  )
+                                : MaterialButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        clearState();
+                                        controller.nextQuestion();
+                                        stopwatch.start();
+                                      });
+                                      // print(controller.currentQuestionSelectedAnswer);
+                                    },
+                                    height: 60,
+                                    minWidth: 250,
+                                    color: buttonBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Text(
+                                      "Next",
+                                      style: buttonTextStyle,
+                                    ),
+                                  ),
                       ],
                     ),
                   ),
@@ -171,5 +226,20 @@ class _QuizScreenState extends State<QuizScreen> {
   void dispose() {
     super.dispose();
     stopwatch.stop();
+    t.cancel();
+  }
+
+  void clearState() {
+    isAttempted = false;
+    isValidated = false;
+
+    status = [
+      TileStatus.UNSELECTED,
+      TileStatus.UNSELECTED,
+      TileStatus.UNSELECTED,
+      TileStatus.UNSELECTED
+    ];
+
+    controller.resetSelection();
   }
 }

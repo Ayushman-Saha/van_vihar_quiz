@@ -43,10 +43,17 @@ class QuizController {
   }
 
   void nextQuestion() {
+    resetSelection();
     if (_currentQuestionIndex < questionList.length - 1) {
       _currentQuestionIndex++;
       currentQuestion = questionList[_currentQuestionIndex];
     }
+  }
+
+  void resetSelection() {
+    selectedIndex = -1;
+    correctIndex = -1;
+    currentQuestionSelectedAnswer = "";
   }
 
 // Initialize questions in the controller, e.g., in the constructor
