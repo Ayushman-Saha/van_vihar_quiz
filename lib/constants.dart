@@ -26,3 +26,9 @@ TextStyle bodyTextStyle = GoogleFonts.poppins(
   fontSize: 16.0,
   fontWeight: FontWeight.normal,
 );
+
+TextStyle questionHeadingTextStyle = GoogleFonts.poppins(
+  color: textGrey,
+  fontSize: 22,
+  fontWeight: FontWeight.bold,
+);
