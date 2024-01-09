@@ -18,6 +18,7 @@ class _QuizScreenState extends State<QuizScreen> {
   var controller = QuizController();
   late Stopwatch stopwatch;
   late Timer t;
+  bool isChecked = false;
 
   List<TileStatus> status = [
     TileStatus.UNSELECTED,
@@ -25,6 +26,8 @@ class _QuizScreenState extends State<QuizScreen> {
     TileStatus.UNSELECTED,
     TileStatus.UNSELECTED
   ];
+
+  bool enabled = true;
 
   @override
   void initState() {
@@ -93,8 +96,8 @@ class _QuizScreenState extends State<QuizScreen> {
                           ],
                         ),
                         Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 controller.currentQuestion.question,
@@ -111,6 +114,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               controller.currentQuestion.correctAnswer,
                           answerType: controller.currentQuestion.answerType,
                           status: status,
+                          enabled: enabled,
                         ),
                       ],
                     ),
@@ -130,19 +134,26 @@ class _QuizScreenState extends State<QuizScreen> {
                                 status[controller.selectedIndex] =
                                     TileStatus.CORRECT;
                               }
+                              // controller.nextQuestion();
+                              enabled = false;
                             });
-                            print(controller.currentQuestionSelectedAnswer);
+                            // print(controller.currentQuestionSelectedAnswer);
                           },
                           height: 60,
-                          minWidth: 150,
+                          minWidth: 250,
                           color: buttonBlue,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Text(
-                            "Next",
-                            style: buttonTextStyle,
-                          ),
+                          child: (!isChecked)
+                              ? Text(
+                                  "Check Answer",
+                                  style: buttonTextStyle,
+                                )
+                              : Text(
+                                  "Next",
+                                  style: buttonTextStyle,
+                                ),
                         ),
                       ],
                     ),

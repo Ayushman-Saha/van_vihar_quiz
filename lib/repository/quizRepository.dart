@@ -13,7 +13,7 @@ class QuizRepository {
           answerDescription: "Lorem Ipsum"),
       QuizQuestion(
           question: 'Which planet is known as the Red Planet?',
-          answerChoices: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
+          answerChoices: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
           correctAnswer: 'Mars',
           hasAttachment: false,
           answerType: "text",

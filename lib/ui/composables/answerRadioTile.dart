@@ -10,12 +10,14 @@ class AnswerRadioTile extends StatefulWidget {
     required this.answerChoices,
     required this.index,
     required this.status,
+    required this.enabled,
   });
 
   final QuizController quizController;
   final List<String> answerChoices;
   final int index;
   final TileStatus status;
+  final bool enabled;
 
   @override
   State<AnswerRadioTile> createState() => _AnswerRadioTileState();
@@ -30,10 +32,12 @@ class _AnswerRadioTileState extends State<AnswerRadioTile> {
       height: 80,
       child: GestureDetector(
         onTap: () {
-          widget.quizController.currentQuestionSelectedAnswer =
-              widget.answerChoices[widget.index];
-          _answer = widget.answerChoices[widget.index];
-          widget.quizController.selectedIndex = widget.index;
+          if (widget.enabled) {
+            widget.quizController.currentQuestionSelectedAnswer =
+                widget.answerChoices[widget.index];
+            _answer = widget.answerChoices[widget.index];
+            widget.quizController.selectedIndex = widget.index;
+          }
         },
         child: Card(
           color: (widget.status == TileStatus.UNSELECTED)
@@ -53,16 +57,19 @@ class _AnswerRadioTileState extends State<AnswerRadioTile> {
                   style: buttonTextStyle,
                 ),
                 Radio<String>(
+                  toggleable: true,
                   value: widget.answerChoices[widget.index],
                   groupValue:
                       widget.quizController.currentQuestionSelectedAnswer,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _answer = value!;
-                      widget.quizController.selectAnswer(_answer);
-                      widget.quizController.selectedIndex = widget.index;
-                    });
-                  },
+                  onChanged: (widget.enabled)
+                      ? (String? value) {
+                          setState(() {
+                            _answer = value!;
+                            widget.quizController.selectAnswer(_answer);
+                            widget.quizController.selectedIndex = widget.index;
+                          });
+                        }
+                      : null,
                 ),
               ],
             ),
