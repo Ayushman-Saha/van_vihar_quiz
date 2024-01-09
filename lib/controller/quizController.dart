@@ -10,6 +10,8 @@ class QuizController {
 
   int _currentQuestionIndex = 0;
   int _score = 0;
+  int selectedIndex = -1;
+  int correctIndex = -1;
   String currentQuestionSelectedAnswer = "";
   late QuizQuestion currentQuestion;
   late List<QuizQuestion> questionList;
@@ -18,12 +20,14 @@ class QuizController {
     currentQuestionSelectedAnswer = answer;
   }
 
-  bool validateAnswer() {
+  int validateAnswer() {
     if (currentQuestionSelectedAnswer == currentQuestion.correctAnswer) {
       _score += 5;
     }
+    int correctIndex =
+        currentQuestion.answerChoices.indexOf(currentQuestion.correctAnswer);
 
-    return currentQuestionSelectedAnswer == currentQuestion.correctAnswer;
+    return correctIndex;
   }
 
   int getCurrentIndex() {

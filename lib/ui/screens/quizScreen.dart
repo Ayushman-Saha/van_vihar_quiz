@@ -19,6 +19,13 @@ class _QuizScreenState extends State<QuizScreen> {
   late Stopwatch stopwatch;
   late Timer t;
 
+  List<TileStatus> status = [
+    TileStatus.UNSELECTED,
+    TileStatus.UNSELECTED,
+    TileStatus.UNSELECTED,
+    TileStatus.UNSELECTED
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -103,6 +110,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           correctAnswer:
                               controller.currentQuestion.correctAnswer,
                           answerType: controller.currentQuestion.answerType,
+                          status: status,
                         ),
                       ],
                     ),
@@ -113,8 +121,17 @@ class _QuizScreenState extends State<QuizScreen> {
                         MaterialButton(
                           onPressed: () {
                             setState(() {
-                              controller.validateAnswer();
+                              int correctIndex = controller.validateAnswer();
+                              if (controller.selectedIndex != correctIndex) {
+                                status[correctIndex] = TileStatus.CORRECT;
+                                status[controller.selectedIndex] =
+                                    TileStatus.INCORRECT;
+                              } else {
+                                status[controller.selectedIndex] =
+                                    TileStatus.CORRECT;
+                              }
                             });
+                            print(controller.currentQuestionSelectedAnswer);
                           },
                           height: 60,
                           minWidth: 150,

@@ -32,3 +32,5 @@ TextStyle questionHeadingTextStyle = GoogleFonts.poppins(
   fontSize: 22,
   fontWeight: FontWeight.bold,
 );
+
+enum TileStatus { UNSELECTED, CORRECT, INCORRECT }
