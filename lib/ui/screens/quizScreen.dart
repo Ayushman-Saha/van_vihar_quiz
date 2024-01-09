@@ -24,6 +24,8 @@ class _QuizScreenState extends State<QuizScreen> {
   bool isAttempted = false;
   bool isValidated = false;
 
+  bool isCorrect = false;
+
   List<TileStatus> status = [
     TileStatus.UNSELECTED,
     TileStatus.UNSELECTED,
@@ -67,9 +69,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 5,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -97,13 +100,14 @@ class _QuizScreenState extends State<QuizScreen> {
                             ),
                           ],
                         ),
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                controller.currentQuestion.question,
-                                style: buttonTextStyle,
+                                "Q. ${controller.currentQuestion.question}",
+                                style: headingTextStyle,
                               ),
                             ],
                           ),
@@ -121,12 +125,14 @@ class _QuizScreenState extends State<QuizScreen> {
                                 enabled: (!isAttempted && !isValidated),
                               )
                             : AnswerDescription(
-                                quizController: controller,
+                                currentQuestion: controller.currentQuestion,
+                                isCorrect: isCorrect,
                               ),
                       ],
                     ),
                   ),
                   Expanded(
+                    flex: 1,
                     child: Column(
                       children: [
                         (!isAttempted && !isValidated)
@@ -144,9 +150,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                             TileStatus.CORRECT;
                                         status[controller.selectedIndex] =
                                             TileStatus.INCORRECT;
+                                        isCorrect = false;
                                       } else {
                                         status[controller.selectedIndex] =
                                             TileStatus.CORRECT;
+                                        isCorrect = true;
                                       }
                                       // controller.nextQuestion();
                                       isValidated = true;
@@ -232,6 +240,7 @@ class _QuizScreenState extends State<QuizScreen> {
   void clearState() {
     isAttempted = false;
     isValidated = false;
+    isCorrect = false;
 
     status = [
       TileStatus.UNSELECTED,
