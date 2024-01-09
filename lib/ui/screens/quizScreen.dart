@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/ui/composables/answerRadioButton.dart';
+import 'package:van_vihar_quiz/ui/screens/endScreen.dart';
+import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 
 import '../../controller/quizController.dart';
 import '../composables/answerDescription.dart';
@@ -198,26 +200,54 @@ class _QuizScreenState extends State<QuizScreen> {
                                       style: buttonTextStyle,
                                     ),
                                   )
-                                : MaterialButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        clearState();
-                                        controller.nextQuestion();
-                                        stopwatch.start();
-                                      });
-                                      // print(controller.currentQuestionSelectedAnswer);
-                                    },
-                                    height: 60,
-                                    minWidth: 250,
-                                    color: buttonBlue,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Text(
-                                      "Next",
-                                      style: buttonTextStyle,
-                                    ),
-                                  ),
+                                : (!controller.isLastQuestion)
+                                    ? MaterialButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            clearState();
+                                            controller.nextQuestion();
+                                            stopwatch.start();
+                                          });
+                                          // print(controller.currentQuestionSelectedAnswer);
+                                        },
+                                        height: 60,
+                                        minWidth: 250,
+                                        color: buttonBlue,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Text(
+                                          "Next",
+                                          style: buttonTextStyle,
+                                        ),
+                                      )
+                                    : MaterialButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            stopwatch.stop();
+                                            Navigator.of(context)
+                                                .pushNamedAndRemoveUntil(
+                                              EndScreen.id,
+                                              ModalRoute.withName(
+                                                StartScreen.id,
+                                              ),
+                                            );
+                                          });
+                                          // print(controller.currentQuestionSelectedAnswer);
+                                        },
+                                        height: 60,
+                                        minWidth: 250,
+                                        color: buttonBlue,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Text(
+                                          "Submit",
+                                          style: buttonTextStyle,
+                                        ),
+                                      ),
                       ],
                     ),
                   ),

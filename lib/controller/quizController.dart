@@ -12,6 +12,7 @@ class QuizController {
   int _score = 0;
   int selectedIndex = -1;
   int correctIndex = -1;
+  bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
   late QuizQuestion currentQuestion;
   late List<QuizQuestion> questionList;
@@ -47,6 +48,9 @@ class QuizController {
     if (_currentQuestionIndex < questionList.length - 1) {
       _currentQuestionIndex++;
       currentQuestion = questionList[_currentQuestionIndex];
+    }
+    if (_currentQuestionIndex == questionList.length - 1) {
+      isLastQuestion = true;
     }
   }
 
