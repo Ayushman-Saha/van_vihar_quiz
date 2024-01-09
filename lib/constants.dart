@@ -34,3 +34,14 @@ TextStyle questionHeadingTextStyle = GoogleFonts.poppins(
 );
 
 enum TileStatus { UNSELECTED, CORRECT, INCORRECT }
+
+String returnFormattedTime(int milli) {
+  String seconds = ((milli ~/ 1000) % 60)
+      .toString()
+      .padLeft(2, "0"); // this is for the second
+  String minutes = ((milli ~/ 1000) ~/ 60)
+      .toString()
+      .padLeft(2, "0"); // this is for the minute
+
+  return "$minutes:$seconds";
+}

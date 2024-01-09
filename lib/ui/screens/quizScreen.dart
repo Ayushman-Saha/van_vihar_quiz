@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:van_vihar_quiz/constants.dart';
+import 'package:van_vihar_quiz/entities/endScreenArguments.dart';
 import 'package:van_vihar_quiz/ui/composables/answerRadioButton.dart';
 import 'package:van_vihar_quiz/ui/screens/endScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
@@ -45,19 +46,6 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  String returnFormattedText() {
-    var milli = stopwatch.elapsed.inMilliseconds;
-
-    String seconds = ((milli ~/ 1000) % 60)
-        .toString()
-        .padLeft(2, "0"); // this is for the second
-    String minutes = ((milli ~/ 1000) ~/ 60)
-        .toString()
-        .padLeft(2, "0"); // this is for the minute
-
-    return "$minutes:$seconds";
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -87,7 +75,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                 style: questionHeadingTextStyle,
                               ),
                               Text(
-                                returnFormattedText(),
+                                returnFormattedTime(
+                                    stopwatch.elapsedMilliseconds),
                                 style: questionHeadingTextStyle,
                               ),
                             ],
@@ -231,6 +220,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                               EndScreen.id,
                                               ModalRoute.withName(
                                                 StartScreen.id,
+                                              ),
+                                              arguments: EndScreenArguments(
+                                                score: controller.getScore(),
+                                                timeTaken: stopwatch
+                                                    .elapsedMilliseconds,
                                               ),
                                             );
                                           });
