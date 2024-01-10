@@ -104,6 +104,34 @@ class _QuizScreenState extends State<QuizScreen> {
                             ],
                           ),
                         ),
+                        (controller.currentQuestion.hasAttachment)
+                            ? Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Card(
+                                        elevation: 10,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.network(
+                                            controller
+                                                .currentQuestion.attachment!,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(
+                                height: 1,
+                              ),
                         (!isAttempted)
                             ? (controller.currentQuestion.answerType == "text")
                                 ? TextAnswerRadioButton(
