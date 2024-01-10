@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/controller/quizController.dart';
-import 'package:van_vihar_quiz/ui/composables/answerRadioTile.dart';
+import 'package:van_vihar_quiz/ui/composables/textAnswerRadioTile.dart';
 
-class AnswerRadioButton extends StatefulWidget {
-  const AnswerRadioButton({
+class TextAnswerRadioButton extends StatefulWidget {
+  const TextAnswerRadioButton({
     super.key,
     required this.quizController,
     required this.answerChoices,
@@ -22,10 +22,10 @@ class AnswerRadioButton extends StatefulWidget {
   final bool enabled;
 
   @override
-  State<AnswerRadioButton> createState() => _AnswerRadioButtonState();
+  State<TextAnswerRadioButton> createState() => _TextAnswerRadioButtonState();
 }
 
-class _AnswerRadioButtonState extends State<AnswerRadioButton> {
+class _TextAnswerRadioButtonState extends State<TextAnswerRadioButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,28 +34,28 @@ class _AnswerRadioButtonState extends State<AnswerRadioButton> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AnswerRadioTile(
+          TextAnswerRadioTile(
             quizController: widget.quizController,
             answerChoices: widget.answerChoices,
             index: 0,
             status: widget.status[0],
             enabled: widget.enabled,
           ),
-          AnswerRadioTile(
+          TextAnswerRadioTile(
             quizController: widget.quizController,
             answerChoices: widget.answerChoices,
             index: 1,
             status: widget.status[1],
             enabled: widget.enabled,
           ),
-          AnswerRadioTile(
+          TextAnswerRadioTile(
             quizController: widget.quizController,
             answerChoices: widget.answerChoices,
             index: 2,
             status: widget.status[2],
             enabled: widget.enabled,
           ),
-          AnswerRadioTile(
+          TextAnswerRadioTile(
             quizController: widget.quizController,
             answerChoices: widget.answerChoices,
             index: 3,

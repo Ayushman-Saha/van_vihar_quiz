@@ -3,8 +3,8 @@ import 'package:van_vihar_quiz/controller/quizController.dart';
 
 import '../../constants.dart';
 
-class AnswerRadioTile extends StatefulWidget {
-  const AnswerRadioTile({
+class TextAnswerRadioTile extends StatefulWidget {
+  const TextAnswerRadioTile({
     super.key,
     required this.quizController,
     required this.answerChoices,
@@ -20,10 +20,10 @@ class AnswerRadioTile extends StatefulWidget {
   final bool enabled;
 
   @override
-  State<AnswerRadioTile> createState() => _AnswerRadioTileState();
+  State<TextAnswerRadioTile> createState() => _TextAnswerRadioTileState();
 }
 
-class _AnswerRadioTileState extends State<AnswerRadioTile> {
+class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
   String _answer = "";
 
   @override

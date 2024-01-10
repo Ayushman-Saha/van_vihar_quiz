@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/entities/endScreenArguments.dart';
-import 'package:van_vihar_quiz/ui/composables/answerRadioButton.dart';
+import 'package:van_vihar_quiz/ui/composables/imageAnswerRadioButton.dart';
+import 'package:van_vihar_quiz/ui/composables/textAnswerRadioButton.dart';
 import 'package:van_vihar_quiz/ui/screens/endScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 
@@ -104,17 +105,29 @@ class _QuizScreenState extends State<QuizScreen> {
                           ),
                         ),
                         (!isAttempted)
-                            ? AnswerRadioButton(
-                                quizController: controller,
-                                answerChoices:
-                                    controller.currentQuestion.answerChoices,
-                                correctAnswer:
-                                    controller.currentQuestion.correctAnswer,
-                                answerType:
-                                    controller.currentQuestion.answerType,
-                                status: status,
-                                enabled: (!isAttempted && !isValidated),
-                              )
+                            ? (controller.currentQuestion.answerType == "text")
+                                ? TextAnswerRadioButton(
+                                    quizController: controller,
+                                    answerChoices: controller
+                                        .currentQuestion.answerChoices,
+                                    correctAnswer: controller
+                                        .currentQuestion.correctAnswer,
+                                    answerType:
+                                        controller.currentQuestion.answerType,
+                                    status: status,
+                                    enabled: (!isAttempted && !isValidated),
+                                  )
+                                : ImageAnswerRadioButton(
+                                    quizController: controller,
+                                    answerChoices: controller
+                                        .currentQuestion.answerChoices,
+                                    correctAnswer: controller
+                                        .currentQuestion.correctAnswer,
+                                    answerType:
+                                        controller.currentQuestion.answerType,
+                                    status: status,
+                                    enabled: (!isAttempted && !isValidated),
+                                  )
                             : AnswerDescription(
                                 currentQuestion: controller.currentQuestion,
                                 isCorrect: isCorrect,
