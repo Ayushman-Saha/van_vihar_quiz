@@ -61,7 +61,6 @@ class _QuizScreenState extends State<QuizScreen> {
       _player.playbackEventStream
           .listen((event) {}, onError: (Object e, StackTrace stackTrace) {});
       try {
-        var duration =
             await _player.setUrl(controller.currentQuestion.attachment!);
       } catch (e) {
         Fluttertoast.showToast(

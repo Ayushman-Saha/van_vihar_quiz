@@ -58,6 +58,8 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
                 ),
                 Radio<String>(
                   toggleable: true,
+                  activeColor: buttonBlue,
+                  splashRadius: 15,
                   value: widget.answerChoices[widget.index],
                   groupValue:
                       widget.quizController.currentQuestionSelectedAnswer,

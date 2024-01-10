@@ -54,18 +54,17 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
               SizedBox(
                 height: 150,
                 width: 150,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network(
-                        widget.answerChoices[widget.index],
-                        fit: BoxFit.cover,
-                      ),
+                child: Card(
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: const BorderSide(width: 8, color: textWhite),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      widget.answerChoices[widget.index],
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -74,6 +73,7 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
                 alignment: Alignment.topLeft,
                 child: Radio<String>(
                   toggleable: true,
+                  activeColor: buttonBlue,
                   value: widget.answerChoices[widget.index],
                   groupValue:
                       widget.quizController.currentQuestionSelectedAnswer,
