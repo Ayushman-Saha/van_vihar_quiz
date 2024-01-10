@@ -9,6 +9,7 @@ class QuizRepository {
           answerChoices: ['Paris', 'London', 'Berlin', 'Madrid'],
           correctAnswer: 'Paris',
           hasAttachment: true,
+          attachmentType: "image",
           attachment:
               "https://images.pexels.com/photos/6335058/pexels-photo-6335058.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
           descriptionAttachment:
@@ -20,7 +21,10 @@ class QuizRepository {
         question: 'Which planet is known as the Red Planet?',
         answerChoices: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
         correctAnswer: 'Mars',
-        hasAttachment: false,
+        hasAttachment: true,
+        attachmentType: "audio",
+        attachment:
+            "https://firebasestorage.googleapis.com/v0/b/van-vihar-quiz.appspot.com/o/carnivores%2FGiggling_call_of_a_spotted_hyena_(Crocuta_crocuta)_-_1472-6785-10-9-S3.mp3?alt=media&token=0b4cfcba-290a-4f6c-8b7d-8eadd0f34fb6",
         answerType: "text",
         answerDescription:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",

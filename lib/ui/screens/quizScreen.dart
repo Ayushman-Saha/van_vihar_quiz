@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/entities/endScreenArguments.dart';
 import 'package:van_vihar_quiz/ui/composables/imageAnswerRadioButton.dart';
@@ -30,6 +32,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
   bool isCorrect = false;
 
+  final _player = AudioPlayer();
+  late Duration duration;
+
   List<TileStatus> status = [
     TileStatus.UNSELECTED,
     TileStatus.UNSELECTED,
@@ -45,6 +50,25 @@ class _QuizScreenState extends State<QuizScreen> {
     t = Timer.periodic(const Duration(milliseconds: 30), (timer) {
       setState(() {});
     });
+  }
+
+  Future<void> _initAudioPlayer() async {
+    // Inform the operating system of our app's audio attributes etc.
+    // We pick a reasonable default for an app that plays speech.
+    // Listen to errors during playback.
+    if (controller.currentQuestion.hasAttachment &&
+        controller.currentQuestion.attachmentType == "audio") {
+      _player.playbackEventStream
+          .listen((event) {}, onError: (Object e, StackTrace stackTrace) {});
+      try {
+        var duration =
+            await _player.setUrl(controller.currentQuestion.attachment!);
+      } catch (e) {
+        Fluttertoast.showToast(
+            msg: "AudioPlayer couldn't be initialised",
+            toastLength: Toast.LENGTH_LONG);
+      }
+    }
   }
 
   @override
@@ -105,30 +129,65 @@ class _QuizScreenState extends State<QuizScreen> {
                           ),
                         ),
                         (controller.currentQuestion.hasAttachment)
-                            ? Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
+                            ? ((controller.currentQuestion.attachmentType ==
+                                    "image")
+                                ? Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        elevation: 10,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
+                                      child: Center(
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Image.network(
-                                            controller
-                                                .currentQuestion.attachment!,
-                                            fit: BoxFit.cover,
+                                          child: Card(
+                                            elevation: 10,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Image.network(
+                                                controller.currentQuestion
+                                                    .attachment!,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
+                                : Center(
+                                    child: SizedBox(
+                                      height: 80,
+                                      child: Card(
+                                        elevation: 10,
+                                        color: buttonBlue,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: SvgPicture.asset(
+                                                color: textWhite,
+                                                "assets/images/waves.svg",
+                                              ),
+                                            ),
+                                            IconButton(
+                                              color: textWhite,
+                                              onPressed: () async {
+                                                await _initAudioPlayer();
+                                                await _player.play();
+                                              },
+                                              icon: const Icon(
+                                                Icons.play_circle,
+                                                size: 40,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ))
                             : const SizedBox(
                                 height: 1,
                               ),
@@ -300,6 +359,7 @@ class _QuizScreenState extends State<QuizScreen> {
     super.dispose();
     stopwatch.stop();
     t.cancel();
+    _player.dispose();
   }
 
   void clearState() {
