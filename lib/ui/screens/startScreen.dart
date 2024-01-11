@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:van_vihar_quiz/constants.dart';
+import 'package:van_vihar_quiz/controller/quizController.dart';
+import 'package:van_vihar_quiz/entities/startScreenArguments.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/quizScreen.dart';
 
@@ -15,6 +17,8 @@ class StartScreen extends StatefulWidget {
 
 class _StartScreenState extends State<StartScreen> {
   late User user;
+  bool _isLoading = false;
+  final QuizController controller = QuizController();
 
   @override
   void initState() {
@@ -70,8 +74,19 @@ class _StartScreenState extends State<StartScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(QuizScreen.id);
+                      onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        await controller.initializeQuestions();
+                        setState(() {
+                          _isLoading = false;
+                        });
+                        Navigator.of(context).pushNamed(
+                          QuizScreen.id,
+                          arguments:
+                              StartScreenArguments(controller: controller),
+                        );
                       },
                       height: 60.0,
                       minWidth: 300.0,
@@ -79,10 +94,14 @@ class _StartScreenState extends State<StartScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Text(
-                        "Start",
-                        style: buttonTextStyle,
-                      ),
+                      child: (!_isLoading)
+                          ? Text(
+                              "Start",
+                              style: buttonTextStyle,
+                            )
+                          : const CircularProgressIndicator(
+                              color: textWhite,
+                            ),
                     ),
                   ),
                   Padding(

@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+import 'package:van_vihar_quiz/credentials.dart';
+import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 
@@ -27,6 +30,21 @@ class _SplashScreenState extends State<SplashScreen> {
         const Duration(seconds: 2),
         () => Navigator.of(context)
             .pushNamedAndRemoveUntil(OnboardingScreen.id, (route) => false),
+      );
+    } else {
+      _checkForAttempt();
+    }
+  }
+
+  Future<void> _checkForAttempt() async {
+    var response = await http
+        .get(Uri.parse("${BASE_URL}/quizResult/get?uid=${user!.uid}"));
+    // print(response.statusCode);
+    if (response.statusCode != 404) {
+      Timer(
+        const Duration(seconds: 2),
+        () => Navigator.of(context)
+            .pushNamedAndRemoveUntil(LeaderboardScreen.id, (route) => false),
       );
     } else {
       Timer(

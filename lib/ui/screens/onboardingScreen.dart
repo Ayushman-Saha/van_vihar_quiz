@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 import 'package:van_vihar_quiz/utils/authUtils.dart';
@@ -19,15 +18,18 @@ class OnboardingScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                flex: 3,
+                flex: 7,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 250.0,
-                      width: 250.0,
-                      child: SvgPicture.asset("assets/images/ic_logo.svg"),
+                    const Padding(
+                      padding: EdgeInsets.all(24.0),
+                      child: CircleAvatar(
+                        radius: 100,
+                        backgroundImage:
+                            AssetImage("assets/images/ic_logo_van_vihar.jpg"),
+                      ),
                     ),
                     Text(
                       "Welcome to Van Vihar!",
@@ -71,6 +73,34 @@ class OnboardingScreen extends StatelessWidget {
                         style: buttonTextStyle,
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: textWhite,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            "assets/images/ic_logo_iiserb.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "By IISERB",
+                        style: bodyTextStyle,
+                      ),
+                    )
                   ],
                 ),
               ),

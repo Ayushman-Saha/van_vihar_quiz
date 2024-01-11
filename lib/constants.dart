@@ -17,19 +17,19 @@ TextStyle headingTextStyle = GoogleFonts.poppins(
 
 TextStyle buttonTextStyle = GoogleFonts.poppins(
   color: textWhite,
-  fontSize: 18.0,
+  fontSize: 15.0,
   fontWeight: FontWeight.w500,
 );
 
 TextStyle bodyTextStyle = GoogleFonts.poppins(
   color: textWhite,
-  fontSize: 16.0,
+  fontSize: 13.0,
   fontWeight: FontWeight.normal,
 );
 
 TextStyle questionHeadingTextStyle = GoogleFonts.poppins(
   color: textGrey,
-  fontSize: 22,
+  fontSize: 20,
   fontWeight: FontWeight.bold,
 );
 

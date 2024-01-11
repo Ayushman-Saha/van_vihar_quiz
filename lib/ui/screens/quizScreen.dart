@@ -6,7 +6,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/entities/endScreenArguments.dart';
+import 'package:van_vihar_quiz/entities/startScreenArguments.dart';
 import 'package:van_vihar_quiz/ui/composables/imageAnswerRadioButton.dart';
+import 'package:van_vihar_quiz/ui/composables/logoHeader.dart';
 import 'package:van_vihar_quiz/ui/composables/textAnswerRadioButton.dart';
 import 'package:van_vihar_quiz/ui/screens/endScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
@@ -31,6 +33,7 @@ class _QuizScreenState extends State<QuizScreen> {
   bool isValidated = false;
 
   bool isCorrect = false;
+  bool _isAudioLoading = false;
 
   final _player = AudioPlayer();
   late Duration duration;
@@ -74,6 +77,10 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     // print(controller.questionList);
+
+    final args =
+        ModalRoute.of(context)!.settings.arguments as StartScreenArguments;
+    controller = args.controller;
     return (controller.questionList.isNotEmpty)
         ? SafeArea(
             child: Center(
@@ -86,8 +93,11 @@ class _QuizScreenState extends State<QuizScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        const Expanded(
+                          child: LogoHeader(),
+                        ),
                         Expanded(
-                          flex: 5,
+                          flex: 7,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,17 +143,18 @@ class _QuizScreenState extends State<QuizScreen> {
                                   ],
                                 ),
                               ),
-                              (controller.currentQuestion.hasAttachment)
+                              (controller.currentQuestion.hasAttachment &&
+                                      !isCorrect)
                                   ? ((controller
                                               .currentQuestion.attachmentType ==
                                           "image")
                                       ? Expanded(
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(2.0),
                                             child: Center(
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(2.0),
                                                 child: Card(
                                                   elevation: 10,
                                                   shape: RoundedRectangleBorder(
@@ -184,13 +195,23 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   IconButton(
                                                     color: textWhite,
                                                     onPressed: () async {
+                                                      setState(() {
+                                                        _isAudioLoading = true;
+                                                      });
                                                       await _initAudioPlayer();
                                                       await _player.play();
+                                                      setState(() {
+                                                        _isAudioLoading = false;
+                                                      });
                                                     },
-                                                    icon: const Icon(
-                                                      Icons.play_circle,
-                                                      size: 40,
-                                                    ),
+                                                    icon: (!_isAudioLoading)
+                                                        ? const Icon(
+                                                            Icons.play_circle,
+                                                            size: 40,
+                                                          )
+                                                        : const CircularProgressIndicator(
+                                                            color: textWhite,
+                                                          ),
                                                   )
                                                 ],
                                               ),
@@ -290,7 +311,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                             setState(() {
                                               isAttempted = true;
                                             });
-
                                             // print(controller.currentQuestionSelectedAnswer);
                                           },
                                           height: 60,

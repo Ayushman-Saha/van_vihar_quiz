@@ -70,7 +70,7 @@ class QuizController {
   }
 
 // Initialize questions in the controller, e.g., in the constructor
-  void initializeQuestions() async {
+  Future<void> initializeQuestions() async {
     var questions = await quizRepository.getQuestions();
     questionList = questions;
     currentQuestion = questions[0];

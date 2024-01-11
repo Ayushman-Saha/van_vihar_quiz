@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/firebase_options.dart';
 import 'package:van_vihar_quiz/ui/screens/endScreen.dart';
+import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/quizScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/splashScreen.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
         OnboardingScreen.id: (context) => const OnboardingScreen(),
         StartScreen.id: (context) => const StartScreen(),
         QuizScreen.id: (context) => const QuizScreen(),
-        EndScreen.id: (context) => const EndScreen()
+        EndScreen.id: (context) => const EndScreen(),
+        LeaderboardScreen.id: (context) => const LeaderboardScreen(),
       },
     );
   }
