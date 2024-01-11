@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:van_vihar_quiz/credentials.dart';
+
 import '../entities/quizQuestion.dart';
 import '../repository/quizRepository.dart';
 
@@ -25,6 +30,7 @@ class QuizController {
   bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
   List<QuizQuestion> questionList = [];
+  Map<dynamic, dynamic> _markingScheme = {};
 
   void selectAnswer(String answer) {
     currentQuestionSelectedAnswer = answer;
@@ -32,7 +38,7 @@ class QuizController {
 
   int validateAnswer() {
     if (currentQuestionSelectedAnswer == currentQuestion.correctAnswer) {
-      _score += 5;
+      _score += _markingScheme[currentQuestion.difficulty]! as int;
     }
     int correctIndex =
         currentQuestion.answerChoices.indexOf(currentQuestion.correctAnswer);
@@ -72,7 +78,17 @@ class QuizController {
 // Initialize questions in the controller, e.g., in the constructor
   Future<void> initializeQuestions() async {
     var questions = await quizRepository.getQuestions();
+    await getMarkingScheme();
     questionList = questions;
     currentQuestion = questions[0];
+  }
+
+  Future<void> getMarkingScheme() async {
+    var response =
+        await http.get(Uri.parse("${BASE_URL}/quizQuestion/getMarkingScheme"));
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      _markingScheme = data["data"];
+    }
   }
 }
