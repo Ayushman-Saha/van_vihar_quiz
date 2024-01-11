@@ -4,20 +4,36 @@ class QuizQuestion {
   final String? attachmentType;
   final String answerType;
   final String? attachment;
-  final List<String> answerChoices;
+  final List<dynamic> answerChoices;
   final String correctAnswer;
   final String answerDescription;
   final String? descriptionAttachment;
+  final String difficulty;
 
-  QuizQuestion({
-    required this.question,
-    required this.hasAttachment,
-    this.attachmentType,
-    this.attachment,
-    required this.answerDescription,
-    this.descriptionAttachment,
-    required this.answerType,
-    required this.answerChoices,
-    required this.correctAnswer,
-  });
+  QuizQuestion(
+      {required this.question,
+      required this.hasAttachment,
+      this.attachmentType,
+      this.attachment,
+      required this.answerDescription,
+      this.descriptionAttachment,
+      required this.answerType,
+      required this.answerChoices,
+      required this.correctAnswer,
+      required this.difficulty});
+
+  factory QuizQuestion.fromJson(dynamic json) {
+    return QuizQuestion(
+      question: json["question"],
+      hasAttachment: json["hasAttachment"],
+      answerDescription: json["answerDescription"],
+      answerType: json["answerType"],
+      answerChoices: json["answerChoices"],
+      correctAnswer: json["correctAnswer"],
+      attachmentType: json["attachmentType"],
+      attachment: json["attachment"],
+      descriptionAttachment: json["descriptionAttachment"],
+      difficulty: json["difficulty"],
+    );
+  }
 }

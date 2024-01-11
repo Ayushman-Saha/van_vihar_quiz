@@ -14,7 +14,7 @@ class ImageAnswerRadioTile extends StatefulWidget {
   });
 
   final QuizController quizController;
-  final List<String> answerChoices;
+  final List<dynamic> answerChoices;
   final int index;
   final TileStatus status;
   final bool enabled;

@@ -2,10 +2,20 @@ import '../entities/quizQuestion.dart';
 import '../repository/quizRepository.dart';
 
 class QuizController {
+  late QuizRepository quizRepository;
+  late QuizQuestion currentQuestion;
+
   QuizController() {
-    final quizRepository = QuizRepository();
-    final questions = quizRepository.getQuestions();
-    initializeQuestions(questions);
+    quizRepository = QuizRepository();
+    currentQuestion = QuizQuestion(
+      question: "question",
+      hasAttachment: false,
+      answerDescription: "answerDescription",
+      answerType: "answerType",
+      answerChoices: ["answerChoices", "", "", ""],
+      correctAnswer: "correctAnswer",
+      difficulty: "",
+    );
   }
 
   int _currentQuestionIndex = 0;
@@ -14,8 +24,7 @@ class QuizController {
   int correctIndex = -1;
   bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
-  late QuizQuestion currentQuestion;
-  late List<QuizQuestion> questionList;
+  List<QuizQuestion> questionList = [];
 
   void selectAnswer(String answer) {
     currentQuestionSelectedAnswer = answer;
@@ -61,7 +70,8 @@ class QuizController {
   }
 
 // Initialize questions in the controller, e.g., in the constructor
-  void initializeQuestions(List<QuizQuestion> questions) {
+  void initializeQuestions() async {
+    var questions = await quizRepository.getQuestions();
     questionList = questions;
     currentQuestion = questions[0];
   }

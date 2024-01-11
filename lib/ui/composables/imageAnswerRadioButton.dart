@@ -16,7 +16,7 @@ class ImageAnswerRadioButton extends StatefulWidget {
   });
 
   final QuizController quizController;
-  final List<String> answerChoices;
+  final List<dynamic> answerChoices;
   final String correctAnswer;
   final String answerType;
   final List<TileStatus> status;
