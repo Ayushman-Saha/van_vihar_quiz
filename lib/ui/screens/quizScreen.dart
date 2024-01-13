@@ -378,6 +378,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                           controller.getScore(),
                                                       timeTaken: stopwatch
                                                           .elapsedMilliseconds,
+                                                          correctAttemptedQuestionIds: controller.getCorrectAttemptedQuestionIds(),
+                                                          attemptedQuestionIds: controller.getAttemptedQuestionIds()
                                                     ),
                                                   );
                                                 });

@@ -20,6 +20,7 @@ class QuizController {
       answerChoices: ["answerChoices", "", "", ""],
       correctAnswer: "correctAnswer",
       difficulty: "",
+      id: ""
     );
   }
 
@@ -30,15 +31,26 @@ class QuizController {
   bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
   List<QuizQuestion> questionList = [];
+  final List<String> _attemptedQuestionIds = [];
+  final List<String> _correctAttemptedQuestionIds = [];
   Map<dynamic, dynamic> _markingScheme = {};
 
   void selectAnswer(String answer) {
     currentQuestionSelectedAnswer = answer;
   }
 
+  List<String> getCorrectAttemptedQuestionIds() {
+    return _correctAttemptedQuestionIds;
+  }
+  List<String> getAttemptedQuestionIds() {
+    return _attemptedQuestionIds;
+  }
+
   int validateAnswer() {
+    _attemptedQuestionIds.add(currentQuestion.id);
     if (currentQuestionSelectedAnswer == currentQuestion.correctAnswer) {
       _score += _markingScheme[currentQuestion.difficulty]! as int;
+      _correctAttemptedQuestionIds.add(currentQuestion.id);
     }
     int correctIndex =
         currentQuestion.answerChoices.indexOf(currentQuestion.correctAnswer);

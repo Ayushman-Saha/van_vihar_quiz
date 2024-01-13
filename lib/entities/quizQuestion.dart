@@ -9,6 +9,7 @@ class QuizQuestion {
   final String answerDescription;
   final String? descriptionAttachment;
   final String difficulty;
+  final String id;
 
   QuizQuestion(
       {required this.question,
@@ -20,10 +21,13 @@ class QuizQuestion {
       required this.answerType,
       required this.answerChoices,
       required this.correctAnswer,
-      required this.difficulty});
+      required this.difficulty,
+        required this.id
+      });
 
   factory QuizQuestion.fromJson(dynamic json) {
     return QuizQuestion(
+      id: json["_id"],
       question: json["question"],
       hasAttachment: json["hasAttachment"],
       answerDescription: json["answerDescription"],
