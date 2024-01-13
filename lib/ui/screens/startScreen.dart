@@ -59,10 +59,19 @@ class _StartScreenState extends State<StartScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      //Rules page
-                      "Lorem ipsum diam volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec",
-                      style: bodyTextStyle,
+                      "Quiz Rules",
+                      style: buttonTextStyle,
                       textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
+                    child: Text(
+                      //Rules page
+                      "1.Eligibility: Open to all participants.\n 2.Fair Play: Answer questions honestly and independently.\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n 4.Prizes: Prizes are non-transferable and subject to availability.",
+                      style: bodyTextStyle,
+                      textAlign: TextAlign.start,
                     ),
                   ),
                 ],

@@ -38,7 +38,7 @@ class OnboardingScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Lorem ipsum diam volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec",
+                        "Discover Van Vihar National Park in Bhopal like never before! Dive into the biodiversity, play quizzes, and join us in conserving this natural treasure through our engaging quiz app.",
                         style: bodyTextStyle,
                         textAlign: TextAlign.center,
                       ),
