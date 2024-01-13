@@ -88,7 +88,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 body: Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 24),
+                        vertical: 8, horizontal: 24),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,58 +97,66 @@ class _QuizScreenState extends State<QuizScreen> {
                           child: LogoHeader(),
                         ),
                         Expanded(
-                          flex: 7,
+                          flex: 8,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Score: ${controller.getScore()}",
-                                      style: questionHeadingTextStyle,
-                                    ),
-                                    Text(
-                                      returnFormattedTime(
-                                          stopwatch.elapsedMilliseconds),
-                                      style: questionHeadingTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    "Question ${controller.getCurrentIndex()}/${controller.getTotalQuestions()}",
-                                    style: questionHeadingTextStyle,
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Score: ${controller.getScore()}",
+                                          style: questionHeadingTextStyle,
+                                        ),
+                                        Text(
+                                          returnFormattedTime(
+                                              stopwatch.elapsedMilliseconds),
+                                          style: questionHeadingTextStyle,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Question ${controller.getCurrentIndex()}/${controller.getTotalQuestions()}",
+                                        style: questionHeadingTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Q. ${controller.currentQuestion.question}",
+                                          style: headingTextStyle,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Q. ${controller.currentQuestion.question}",
-                                      style: headingTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
+
+
                               (controller.currentQuestion.hasAttachment &&
-                                      !isCorrect)
+                                      !isValidated)
                                   ? ((controller
                                               .currentQuestion.attachmentType ==
                                           "image")
                                       ? Expanded(
+                                flex:4,
                                           child: Padding(
                                             padding: const EdgeInsets.all(2.0),
                                             child: Center(
@@ -178,7 +186,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : Center(
                                           child: SizedBox(
-                                            height: 80,
+                                            height: 60,
                                             child: Card(
                                               elevation: 10,
                                               color: buttonBlue,
@@ -224,30 +232,35 @@ class _QuizScreenState extends State<QuizScreen> {
                               (!isAttempted)
                                   ? (controller.currentQuestion.answerType ==
                                           "text")
-                                      ? TextAnswerRadioButton(
-                                          quizController: controller,
-                                          answerChoices: controller
-                                              .currentQuestion.answerChoices,
-                                          correctAnswer: controller
-                                              .currentQuestion.correctAnswer,
-                                          answerType: controller
-                                              .currentQuestion.answerType,
-                                          status: status,
-                                          enabled:
-                                              (!isAttempted && !isValidated),
-                                        )
-                                      : ImageAnswerRadioButton(
-                                          quizController: controller,
-                                          answerChoices: controller
-                                              .currentQuestion.answerChoices,
-                                          correctAnswer: controller
-                                              .currentQuestion.correctAnswer,
-                                          answerType: controller
-                                              .currentQuestion.answerType,
-                                          status: status,
-                                          enabled:
-                                              (!isAttempted && !isValidated),
-                                        )
+                                      ? Expanded(
+                                flex: 8,
+                                        child: TextAnswerRadioButton(
+                                            quizController: controller,
+                                            answerChoices: controller
+                                                .currentQuestion.answerChoices,
+                                            correctAnswer: controller
+                                                .currentQuestion.correctAnswer,
+                                            answerType: controller
+                                                .currentQuestion.answerType,
+                                            status: status,
+                                            enabled:
+                                                (!isAttempted && !isValidated),
+                                          ),
+                                      )
+                                      : Expanded(
+                                        child: ImageAnswerRadioButton(
+                                            quizController: controller,
+                                            answerChoices: controller
+                                                .currentQuestion.answerChoices,
+                                            correctAnswer: controller
+                                                .currentQuestion.correctAnswer,
+                                            answerType: controller
+                                                .currentQuestion.answerType,
+                                            status: status,
+                                            enabled:
+                                                (!isAttempted && !isValidated),
+                                          ),
+                                      )
                                   : AnswerDescription(
                                       currentQuestion:
                                           controller.currentQuestion,

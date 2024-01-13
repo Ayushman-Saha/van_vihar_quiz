@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "242217690971-9ndeh8npdvpsg4btn0ur3ad1oka9ghn1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayushman.van_vihar_quiz",
+            "certificate_hash": "c9aa54d9159d0cf8f9cc4665534046b9b6dd6799"
+          }
+        },
+        {
+          "client_id": "242217690971-umg9dmtfspnf2p186r9eovptidretr5q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayushman.van_vihar_quiz",
+            "certificate_hash": "3f4d949d6146454dfdd3d3030fcbc6ac0defd447"
+          }
+        },
+        {
           "client_id": "242217690971-2f90dl143td3ogh60nom9klj37s9af0h.apps.googleusercontent.com",
           "client_type": 3
         }

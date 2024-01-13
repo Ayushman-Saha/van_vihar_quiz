@@ -28,8 +28,7 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 65,
+    return Expanded(
       child: GestureDetector(
         onTap: () {
           if (widget.enabled) {

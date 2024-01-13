@@ -11,7 +11,7 @@ const incorrectRed = Color(0XFFE51937);
 
 TextStyle headingTextStyle = GoogleFonts.poppins(
   color: textWhite,
-  fontSize: 20.0,
+  fontSize: 16.0,
   fontWeight: FontWeight.w700,
 );
 
@@ -29,7 +29,7 @@ TextStyle bodyTextStyle = GoogleFonts.poppins(
 
 TextStyle questionHeadingTextStyle = GoogleFonts.poppins(
   color: textGrey,
-  fontSize: 20,
+  fontSize: 15,
   fontWeight: FontWeight.bold,
 );
 
