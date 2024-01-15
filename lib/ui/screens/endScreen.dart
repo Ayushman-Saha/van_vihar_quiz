@@ -28,22 +28,26 @@ class _EndScreenState extends State<EndScreen> {
     user = FirebaseAuth.instance.currentUser!;
   }
 
-  Future<void> _updateScore(int score, int timeTaken, List<String> attemptedQuestionIds, List<String> correctAttemptedQuestionIds) async {
-
+  Future<void> _updateScore(
+      int score,
+      int timeTaken,
+      List<String> attemptedQuestionIds,
+      List<String> correctAttemptedQuestionIds) async {
     Map<String, dynamic> data = {
       "uid": user.uid,
       "name": user.displayName,
       "email": user.email,
+      "displayPicture": user.photoURL,
       "score": score,
       "timeTaken": timeTaken,
-      "attemptedQuestionIds" : attemptedQuestionIds,
+      "attemptedQuestionIds": attemptedQuestionIds,
       "correctAttemptedQuestionIds": correctAttemptedQuestionIds
     };
 
     Map<String, String> headers = {"content-type": "application/json"};
 
     var body = jsonEncode(data);
-    // print(body);
+    print(body);
 
     setState(() {
       _isLoading = true;
@@ -129,7 +133,11 @@ class _EndScreenState extends State<EndScreen> {
                   child: Center(
                     child: MaterialButton(
                       onPressed: () async {
-                        _updateScore(args.score, args.timeTaken, args.attemptedQuestionIds,args.correctAttemptedQuestionIds);
+                        _updateScore(
+                            args.score,
+                            args.timeTaken,
+                            args.attemptedQuestionIds,
+                            args.correctAttemptedQuestionIds);
                       },
                       height: 60,
                       minWidth: 250,
