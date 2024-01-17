@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const backgroundBlue = Color(0XFF252C4B);
-const headerBlue = Color(0XFF36416F);
+const backgroundBlue = Color(0XFF121212);
+const headerBlue = Color(0XFF2E2B33);
 const textWhite = Color(0xFFFAFAFA);
 const textGrey = Color(0XFF929BC3);
-const buttonBlue = Color(0xFF0F7EEA);
+const buttonBlue = Color(0xFF006D5B);
 const correctGreen = Color(0xFF5FC521);
 const incorrectRed = Color(0XFFE51937);
 

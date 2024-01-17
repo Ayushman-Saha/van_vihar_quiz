@@ -1,12 +1,40 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:van_vihar_quiz/constants.dart';
+import 'package:van_vihar_quiz/credentials.dart';
+import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/startScreen.dart';
 import 'package:van_vihar_quiz/utils/authUtils.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
   static String id = "OnboardingScreen";
+
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  bool _isLoading = false;
+
+  Future<void> _checkForAttempt(User user, BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    var response =
+        await http.get(Uri.parse("$BASE_URL/quizResult/get?uid=${user.uid}"));
+    setState(() {
+      _isLoading = false;
+    });
+    if (response.statusCode == 404) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(StartScreen.id, (route) => false);
+    } else {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(LeaderboardScreen.id, (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +85,8 @@ class OnboardingScreen extends StatelessWidget {
                         UserCredential credential = await signInWithGoogle();
                         // print(credential.user);
                         if (credential.user != null) {
-                          await Navigator.of(context).pushNamedAndRemoveUntil(
-                              StartScreen.id, (route) => false);
+                          await _checkForAttempt(credential.user!, context);
                         }
-                        // print("Hello World");
                       },
                       height: 60.0,
                       minWidth: 300.0,
@@ -68,10 +94,14 @@ class OnboardingScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Text(
-                        "Get started!",
-                        style: buttonTextStyle,
-                      ),
+                      child: (!_isLoading)
+                          ? Text(
+                              "Get started!",
+                              style: buttonTextStyle,
+                            )
+                          : const CircularProgressIndicator(
+                              color: textWhite,
+                            ),
                     ),
                   ],
                 ),

@@ -87,8 +87,8 @@ class _QuizScreenState extends State<QuizScreen> {
               child: Scaffold(
                 body: Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8, horizontal: 24),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,15 +103,17 @@ class _QuizScreenState extends State<QuizScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Score: ${controller.getScore()}",
@@ -137,7 +139,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                   Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Q. ${controller.currentQuestion.question}",
@@ -148,15 +151,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                   ),
                                 ],
                               ),
-
-
                               (controller.currentQuestion.hasAttachment &&
                                       !isValidated)
                                   ? ((controller
                                               .currentQuestion.attachmentType ==
                                           "image")
                                       ? Expanded(
-                                flex:4,
+                                          flex: 4,
                                           child: Padding(
                                             padding: const EdgeInsets.all(2.0),
                                             child: Center(
@@ -233,8 +234,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                   ? (controller.currentQuestion.answerType ==
                                           "text")
                                       ? Expanded(
-                                flex: 8,
-                                        child: TextAnswerRadioButton(
+                                          flex: 8,
+                                          child: TextAnswerRadioButton(
                                             quizController: controller,
                                             answerChoices: controller
                                                 .currentQuestion.answerChoices,
@@ -246,9 +247,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                             enabled:
                                                 (!isAttempted && !isValidated),
                                           ),
-                                      )
+                                        )
                                       : Expanded(
-                                        child: ImageAnswerRadioButton(
+                                          child: ImageAnswerRadioButton(
                                             quizController: controller,
                                             answerChoices: controller
                                                 .currentQuestion.answerChoices,
@@ -260,11 +261,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                             enabled:
                                                 (!isAttempted && !isValidated),
                                           ),
-                                      )
-                                  : AnswerDescription(
-                                      currentQuestion:
-                                          controller.currentQuestion,
-                                      isCorrect: isCorrect,
+                                        )
+                                  : SingleChildScrollView(
+                                      child: AnswerDescription(
+                                        currentQuestion:
+                                            controller.currentQuestion,
+                                        isCorrect: isCorrect,
+                                      ),
                                     ),
                             ],
                           ),
@@ -372,15 +375,17 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     ModalRoute.withName(
                                                       StartScreen.id,
                                                     ),
-                                                    arguments:
-                                                        EndScreenArguments(
-                                                      score:
-                                                          controller.getScore(),
-                                                      timeTaken: stopwatch
-                                                          .elapsedMilliseconds,
-                                                          correctAttemptedQuestionIds: controller.getCorrectAttemptedQuestionIds(),
-                                                          attemptedQuestionIds: controller.getAttemptedQuestionIds()
-                                                    ),
+                                                    arguments: EndScreenArguments(
+                                                        score: controller
+                                                            .getScore(),
+                                                        timeTaken: stopwatch
+                                                            .elapsedMilliseconds,
+                                                        correctAttemptedQuestionIds:
+                                                            controller
+                                                                .getCorrectAttemptedQuestionIds(),
+                                                        attemptedQuestionIds:
+                                                            controller
+                                                                .getAttemptedQuestionIds()),
                                                   );
                                                 });
                                                 // print(controller.currentQuestionSelectedAnswer);

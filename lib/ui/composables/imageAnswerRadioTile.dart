@@ -29,7 +29,7 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 0.2*MediaQuery.of(context).size.height,
+      height: 0.2 * MediaQuery.of(context).size.height,
       child: GestureDetector(
         onTap: () {
           if (widget.enabled) {
@@ -51,19 +51,19 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
             fit: StackFit.expand,
             children: [
               Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: const BorderSide(width: 8, color: textWhite),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.network(
-                      widget.answerChoices[widget.index],
-                      fit: BoxFit.cover,
-                    ),
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: const BorderSide(width: 8, color: textWhite),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.network(
+                    widget.answerChoices[widget.index],
+                    fit: BoxFit.cover,
                   ),
                 ),
+              ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Radio<String>(
