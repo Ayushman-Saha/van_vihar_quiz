@@ -29,7 +29,7 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 0.12 * MediaQuery.of(context).size.height,
+      height: 0.1 * MediaQuery.of(context).size.height,
       child: GestureDetector(
         onTap: () {
           if (widget.enabled) {
@@ -40,7 +40,7 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
           }
         },
         child: Card(
-          shape:  RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: const BorderSide(
               width: 3,

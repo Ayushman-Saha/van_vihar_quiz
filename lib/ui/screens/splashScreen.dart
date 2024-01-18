@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:van_vihar_quiz/credentials.dart';
 import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
@@ -63,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: SizedBox(
             height: 250.0,
             width: 250.0,
-            child: SvgPicture.asset("assets/images/ic_logo.svg"),
+            child: Image.asset("assets/images/ic_logo.jpg"),
           ),
         ),
       ),

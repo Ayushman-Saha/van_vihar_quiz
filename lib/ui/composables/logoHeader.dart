@@ -6,45 +6,48 @@ class LogoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      color: headerBlue,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundColor: textWhite,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  "assets/images/ic_logo_van_vihar.jpg",
-                  fit: BoxFit.cover,
+    return SizedBox(
+      height: 0.1 * MediaQuery.of(context).size.height,
+      child: Card(
+        elevation: 10,
+        color: headerBlue,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: textWhite,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    "assets/images/ic_logo_van_vihar.jpg",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Text(
-            "Van Vihar Bhopal",
-            style: headingTextStyle,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundColor: textWhite,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  "assets/images/ic_logo_iiserb.jpg",
-                  fit: BoxFit.cover,
+            Text(
+              "Van Vihar Bhopal",
+              style: headingTextStyle,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: textWhite,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    "assets/images/ic_logo_iiserb.jpg",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

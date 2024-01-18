@@ -68,7 +68,7 @@ class _StartScreenState extends State<StartScreen> {
                         const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                     child: Text(
                       //Rules page
-                      "\n 1.Eligibility: Open to all participants.\n 2.Fair Play: Answer questions honestly and independently.\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n 4.Prizes: Prizes are non-transferable and subject to availability.",
+                      "\n 1.Eligibility: Open to all participants.\n\n 2.Fair Play: Answer questions honestly and independently.\n\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n\n 4.Prizes: Prizes are non-transferable and subject to availability.\n",
                       style: bodyTextStyle,
                       textAlign: TextAlign.start,
                     ),

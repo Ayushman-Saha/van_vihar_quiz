@@ -23,13 +23,13 @@ TextStyle buttonTextStyle = GoogleFonts.poppins(
 
 TextStyle bodyTextStyle = GoogleFonts.poppins(
   color: textWhite,
-  fontSize: 13.0,
+  fontSize: 15.0,
   fontWeight: FontWeight.normal,
 );
 
 TextStyle questionHeadingTextStyle = GoogleFonts.poppins(
   color: textGrey,
-  fontSize: 17,
+  fontSize: 24,
   fontWeight: FontWeight.bold,
 );
 

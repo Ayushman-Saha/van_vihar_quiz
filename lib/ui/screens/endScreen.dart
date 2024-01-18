@@ -120,7 +120,7 @@ class _EndScreenState extends State<EndScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           //Rules page
-                          "Time taken by you is ${(args.timeTaken ~/ (1000 * 60))} minutes and ${args.timeTaken ~/ 1000} seconds",
+                          "Time taken by you is ${(args.timeTaken ~/ (1000 * 60))} minutes and ${(args.timeTaken ~/ 1000) % 60} seconds",
                           style: bodyTextStyle,
                           textAlign: TextAlign.center,
                         ),

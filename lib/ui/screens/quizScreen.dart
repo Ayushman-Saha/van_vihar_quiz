@@ -89,8 +89,8 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: SizedBox(
                     child: Center(
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 24),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,8 +125,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                         ],
                                       ),
                                     ),
+                                    const SizedBox(
+                                      height: 35,
+                                    ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Question ${controller.getCurrentIndex()}/${controller.getTotalQuestions()}",
@@ -135,11 +139,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16.0),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             "Q. ${controller.currentQuestion.question}",
@@ -153,36 +159,44 @@ class _QuizScreenState extends State<QuizScreen> {
                                 ),
                                 (controller.currentQuestion.hasAttachment &&
                                         !isValidated)
-                                    ? ((controller
-                                                .currentQuestion.attachmentType ==
+                                    ? ((controller.currentQuestion
+                                                .attachmentType ==
                                             "image")
                                         ? Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Center(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(2.0),
-                                              child: Card(
-                                                elevation: 10,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  side: const BorderSide(
-                                                    width: 4,
-                                                    color: Color(0xFF646E91),
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
+                                                child: Card(
+                                                  elevation: 10,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    side: const BorderSide(
+                                                      width: 4,
+                                                      color: Color(0xFF646E91),
+                                                    ),
                                                   ),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  child: Image.network(
-                                                    width: 0.4 * MediaQuery.of(context).size.width,
-                                                    controller.currentQuestion.attachment!,
-                                                    fit: BoxFit.cover,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: Image.network(
+                                                      width: 0.45 *
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      controller.currentQuestion
+                                                          .attachment!,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        )
+                                          )
                                         : Center(
                                             child: SizedBox(
                                               height: 60,
@@ -203,12 +217,14 @@ class _QuizScreenState extends State<QuizScreen> {
                                                       color: textWhite,
                                                       onPressed: () async {
                                                         setState(() {
-                                                          _isAudioLoading = true;
+                                                          _isAudioLoading =
+                                                              true;
                                                         });
                                                         await _initAudioPlayer();
                                                         await _player.play();
                                                         setState(() {
-                                                          _isAudioLoading = false;
+                                                          _isAudioLoading =
+                                                              false;
                                                         });
                                                       },
                                                       icon: (!_isAudioLoading)
@@ -232,34 +248,34 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ? (controller.currentQuestion.answerType ==
                                             "text")
                                         ? TextAnswerRadioButton(
-                                          quizController: controller,
-                                          answerChoices: controller
-                                              .currentQuestion.answerChoices,
-                                          correctAnswer: controller
-                                              .currentQuestion.correctAnswer,
-                                          answerType: controller
-                                              .currentQuestion.answerType,
-                                          status: status,
-                                          enabled:
-                                              (!isAttempted && !isValidated),
-                                        )
+                                            quizController: controller,
+                                            answerChoices: controller
+                                                .currentQuestion.answerChoices,
+                                            correctAnswer: controller
+                                                .currentQuestion.correctAnswer,
+                                            answerType: controller
+                                                .currentQuestion.answerType,
+                                            status: status,
+                                            enabled:
+                                                (!isAttempted && !isValidated),
+                                          )
                                         : ImageAnswerRadioButton(
-                                          quizController: controller,
-                                          answerChoices: controller
-                                              .currentQuestion.answerChoices,
-                                          correctAnswer: controller
-                                              .currentQuestion.correctAnswer,
-                                          answerType: controller
-                                              .currentQuestion.answerType,
-                                          status: status,
-                                          enabled:
-                                              (!isAttempted && !isValidated),
-                                        )
+                                            quizController: controller,
+                                            answerChoices: controller
+                                                .currentQuestion.answerChoices,
+                                            correctAnswer: controller
+                                                .currentQuestion.correctAnswer,
+                                            answerType: controller
+                                                .currentQuestion.answerType,
+                                            status: status,
+                                            enabled:
+                                                (!isAttempted && !isValidated),
+                                          )
                                     : AnswerDescription(
-                                      currentQuestion:
-                                          controller.currentQuestion,
-                                      isCorrect: isCorrect,
-                                    ),
+                                        currentQuestion:
+                                            controller.currentQuestion,
+                                        isCorrect: isCorrect,
+                                      ),
                               ],
                             ),
                             Column(
@@ -279,11 +295,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                   correctIndex) {
                                                 status[correctIndex] =
                                                     TileStatus.CORRECT;
-                                                status[controller.selectedIndex] =
+                                                status[controller
+                                                        .selectedIndex] =
                                                     TileStatus.INCORRECT;
                                                 isCorrect = false;
                                               } else {
-                                                status[controller.selectedIndex] =
+                                                status[controller
+                                                        .selectedIndex] =
                                                     TileStatus.CORRECT;
                                                 isCorrect = true;
                                               }
@@ -292,7 +310,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                             });
                                           } else {
                                             Fluttertoast.showToast(
-                                              msg: "Select an option to continue",
+                                              msg:
+                                                  "Select an option to continue",
                                               toastLength: Toast.LENGTH_SHORT,
                                             );
                                           }
@@ -302,7 +321,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                         minWidth: 250,
                                         color: buttonBlue,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                         child: Text(
                                           "Check Answer",
