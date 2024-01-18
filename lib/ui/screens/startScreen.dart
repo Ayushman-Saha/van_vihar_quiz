@@ -32,13 +32,12 @@ class _StartScreenState extends State<StartScreen> {
     return SafeArea(
         child: Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -69,16 +68,14 @@ class _StartScreenState extends State<StartScreen> {
                         const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                     child: Text(
                       //Rules page
-                      "1.Eligibility: Open to all participants.\n 2.Fair Play: Answer questions honestly and independently.\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n 4.Prizes: Prizes are non-transferable and subject to availability.",
+                      "\n 1.Eligibility: Open to all participants.\n 2.Fair Play: Answer questions honestly and independently.\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n 4.Prizes: Prizes are non-transferable and subject to availability.",
                       style: bodyTextStyle,
                       textAlign: TextAlign.start,
                     ),
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: Column(
+              Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -137,8 +134,8 @@ class _StartScreenState extends State<StartScreen> {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ));

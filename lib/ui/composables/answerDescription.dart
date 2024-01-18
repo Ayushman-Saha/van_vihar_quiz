@@ -15,84 +15,94 @@ class AnswerDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 40,
-                width: 125,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  color: (isCorrect) ? correctGreen : incorrectRed,
-                  child: (isCorrect)
-                      ? Center(
-                          child: Text(
-                            "Correct",
-                            style: buttonTextStyle,
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: 40,
+                  width: 100,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    color: (isCorrect) ? correctGreen : incorrectRed,
+                    child: (isCorrect)
+                        ? Center(
+                            child: Text(
+                              "Correct",
+                              style: buttonTextStyle,
+                            ),
+                          )
+                        : Center(
+                            child: Text(
+                              "Incorrect",
+                              style: buttonTextStyle,
+                            ),
                           ),
-                        )
-                      : Center(
-                          child: Text(
-                            "Incorrect",
-                            style: buttonTextStyle,
-                          ),
-                        ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-                width: 125,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  color: headerBlue,
-                  child: Center(
-                    child: Text(
-                      currentQuestion.difficulty.capitalizeFirst!,
-                      style: buttonTextStyle,
-                    ),
                   ),
                 ),
-              )
-            ],
-          ),
-          (currentQuestion.descriptionAttachment != null)
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.network(
-                          currentQuestion.descriptionAttachment!,
-                          fit: BoxFit.fill,
-                        ),
+                SizedBox(
+                  height: 40,
+                  width: 100,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    color: headerBlue,
+                    child: Center(
+                      child: Text(
+                        currentQuestion.difficulty.capitalizeFirst!,
+                        style: buttonTextStyle,
                       ),
                     ),
                   ),
                 )
-              : const SizedBox(
-                  height: 1,
-                ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              currentQuestion.answerDescription,
-              style: bodyTextStyle,
+              ],
             ),
-          ),
-        ],
+            (currentQuestion.descriptionAttachment != null)
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: 0.4* MediaQuery.of(context).size.width,
+                      width: 0.4* MediaQuery.of(context).size.width,
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(
+                            width: 4,
+                            color: Color(0xFF646E91),
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            currentQuestion.descriptionAttachment!,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(
+                    height: 1,
+                  ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                currentQuestion.answerDescription,
+                style: bodyTextStyle,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            )
+          ],
+        ),
       ),
     );
   }

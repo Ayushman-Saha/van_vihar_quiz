@@ -28,7 +28,8 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 0.12 * MediaQuery.of(context).size.height,
       child: GestureDetector(
         onTap: () {
           if (widget.enabled) {
@@ -39,6 +40,13 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
           }
         },
         child: Card(
+          shape:  RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(
+              width: 3,
+              color: Color(0xFF646E91),
+            ),
+          ),
           color: (widget.status == TileStatus.UNSELECTED)
               ? headerBlue
               : ((widget.status == TileStatus.CORRECT)
@@ -47,13 +55,13 @@ class _TextAnswerRadioTileState extends State<TextAnswerRadioTile> {
           borderOnForeground: true,
           elevation: 10,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 36),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   widget.answerChoices[widget.index],
-                  style: buttonTextStyle,
+                  style: headingTextStyle,
                 ),
                 Radio<String>(
                   toggleable: true,

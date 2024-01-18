@@ -30,19 +30,30 @@ class LeaderboardTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "#$rank",
-                  style: headingTextStyle,
-                ),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(displayPicture),
-                  radius: 30,
-                ),
-                Text(
-                  name,
-                  style: buttonTextStyle,
+                SizedBox(
+                  width: 0.65 * MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "#$rank",
+                        style: headingTextStyle,
+                      ),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(displayPicture),
+                        radius: 20,
+                      ),
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          name,
+                          style: buttonTextStyle,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
