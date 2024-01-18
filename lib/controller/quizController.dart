@@ -1,7 +1,4 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:van_vihar_quiz/credentials.dart';
+import 'package:van_vihar_quiz/entities/quizDetailsData.dart';
 
 import '../entities/quizQuestion.dart';
 import '../repository/quizRepository.dart';
@@ -9,6 +6,7 @@ import '../repository/quizRepository.dart';
 class QuizController {
   late QuizRepository quizRepository;
   late QuizQuestion currentQuestion;
+  late QuizDetailsData _quizDetails;
 
   QuizController() {
     quizRepository = QuizRepository();
@@ -20,20 +18,28 @@ class QuizController {
       answerChoices: ["answerChoices", "", "", ""],
       correctAnswer: "correctAnswer",
       difficulty: "",
-      id: ""
+      id: "",
     );
   }
 
-  int _currentQuestionIndex = 0;
+  int _currentQuestionIndex = 1;
   int _score = 0;
+
   int selectedIndex = -1;
   int correctIndex = -1;
+
+  int typeAttempts = 0;
+  String currentType = "easy";
+
   bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
-  List<QuizQuestion> questionList = [];
+
+  Map numberOfAttempts = {"easy": 4, "medium": 3, "hard": 3};
+
+  Map<String, List<QuizQuestion>> questionList = {};
+
   final List<String> _attemptedQuestionIds = [];
   final List<String> _correctAttemptedQuestionIds = [];
-  Map<dynamic, dynamic> _markingScheme = {};
 
   void selectAnswer(String answer) {
     currentQuestionSelectedAnswer = answer;
@@ -42,6 +48,7 @@ class QuizController {
   List<String> getCorrectAttemptedQuestionIds() {
     return _correctAttemptedQuestionIds;
   }
+
   List<String> getAttemptedQuestionIds() {
     return _attemptedQuestionIds;
   }
@@ -49,7 +56,15 @@ class QuizController {
   int validateAnswer() {
     _attemptedQuestionIds.add(currentQuestion.id);
     if (currentQuestionSelectedAnswer == currentQuestion.correctAnswer) {
-      _score += _markingScheme[currentQuestion.difficulty]! as int;
+      if (currentQuestion.difficulty == "easy") {
+        _score += _quizDetails.marksEasy;
+      }
+      if (currentQuestion.difficulty == "medium") {
+        _score += _quizDetails.marksMedium;
+      }
+      if (currentQuestion.difficulty == "hard") {
+        _score += _quizDetails.marksHard;
+      }
       _correctAttemptedQuestionIds.add(currentQuestion.id);
     }
     int correctIndex =
@@ -59,11 +74,11 @@ class QuizController {
   }
 
   int getCurrentIndex() {
-    return _currentQuestionIndex + 1;
+    return _currentQuestionIndex;
   }
 
   int getTotalQuestions() {
-    return questionList.length;
+    return _quizDetails.questionCount;
   }
 
   int getScore() {
@@ -72,12 +87,29 @@ class QuizController {
 
   void nextQuestion() {
     resetSelection();
-    if (_currentQuestionIndex < questionList.length - 1) {
+    if (_currentQuestionIndex < _quizDetails.questionCount) {
       _currentQuestionIndex++;
-      currentQuestion = questionList[_currentQuestionIndex];
+      typeAttempts++;
+      if (typeAttempts < numberOfAttempts[currentType]) {
+        currentQuestion = questionList[currentType]![typeAttempts];
+      } else {
+        nextType(currentType);
+        typeAttempts = 0;
+        currentQuestion = questionList[currentType]![typeAttempts];
+      }
     }
-    if (_currentQuestionIndex == questionList.length - 1) {
+    if (_currentQuestionIndex == _quizDetails.questionCount &&
+        currentType == "hard") {
       isLastQuestion = true;
+    }
+  }
+
+  void nextType(String type) {
+    if (type == "easy") {
+      currentType = "medium";
+    }
+    if (type == "medium") {
+      currentType = "hard";
     }
   }
 
@@ -89,18 +121,10 @@ class QuizController {
 
 // Initialize questions in the controller, e.g., in the constructor
   Future<void> initializeQuestions() async {
-    var questions = await quizRepository.getQuestions();
-    await getMarkingScheme();
+    _quizDetails = await quizRepository.getQuizDetails();
+    var questions = await quizRepository.getQuestions(
+        _quizDetails.questionCount, _quizDetails.tags);
     questionList = questions;
-    currentQuestion = questions[0];
-  }
-
-  Future<void> getMarkingScheme() async {
-    var response =
-        await http.get(Uri.parse("${BASE_URL}/quizQuestion/getMarkingScheme"));
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      _markingScheme = data["data"];
-    }
+    currentQuestion = questions[currentType]![0];
   }
 }
