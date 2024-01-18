@@ -34,7 +34,7 @@ class QuizController {
   bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
 
-  Map numberOfAttempts = {"easy": 4, "medium": 3, "hard": 3};
+  Map numberOfAttempts = {"easy": 4, "medium": 4, "hard": 2};
 
   Map<String, List<QuizQuestion>> questionList = {};
 

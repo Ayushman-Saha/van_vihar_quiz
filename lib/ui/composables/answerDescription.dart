@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/entities/quizQuestion.dart';
 
@@ -44,6 +45,21 @@ class AnswerDescription extends StatelessWidget {
                         ),
                 ),
               ),
+              SizedBox(
+                height: 40,
+                width: 125,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  color: headerBlue,
+                  child: Center(
+                    child: Text(
+                      currentQuestion.difficulty.capitalizeFirst!,
+                      style: buttonTextStyle,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
           (currentQuestion.descriptionAttachment != null)

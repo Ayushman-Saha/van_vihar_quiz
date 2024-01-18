@@ -47,14 +47,13 @@ class _EndScreenState extends State<EndScreen> {
     Map<String, String> headers = {"content-type": "application/json"};
 
     var body = jsonEncode(data);
-    print(body);
 
     setState(() {
       _isLoading = true;
     });
 
     final response = await http.post(
-      Uri.parse("${BASE_URL}/quizResult/add"),
+      Uri.parse("$BASE_URL/quizResult/add"),
       headers: headers,
       body: body,
     );
