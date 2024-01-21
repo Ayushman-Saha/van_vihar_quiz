@@ -53,6 +53,10 @@ class QuizController {
     return _attemptedQuestionIds;
   }
 
+  int getTimeLimit() {
+    return _quizDetails.timeLimit;
+  }
+
   int validateAnswer() {
     _attemptedQuestionIds.add(currentQuestion.id);
     if (currentQuestionSelectedAnswer == currentQuestion.correctAnswer) {

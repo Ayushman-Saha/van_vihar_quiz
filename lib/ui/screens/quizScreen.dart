@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:just_audio/just_audio.dart';
@@ -50,7 +51,7 @@ class _QuizScreenState extends State<QuizScreen> {
     super.initState();
     stopwatch = Stopwatch();
     stopwatch.start();
-    t = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+    t = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {});
     });
     controller.initializeQuestions();
@@ -78,9 +79,33 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     // print(controller.questionList);
 
+    //Getting the arguments
     final args =
         ModalRoute.of(context)!.settings.arguments as StartScreenArguments;
     controller = args.controller;
+
+    //Checking for the timer
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      if (controller.getTimeLimit() - stopwatch.elapsedMilliseconds <= 0) {
+        t.cancel();
+        stopwatch.stop();
+        Fluttertoast.showToast(
+            msg: "Time is up!", toastLength: Toast.LENGTH_LONG);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          EndScreen.id,
+          ModalRoute.withName(
+            StartScreen.id,
+          ),
+          arguments: EndScreenArguments(
+              score: controller.getScore(),
+              timeTaken: stopwatch.elapsedMilliseconds,
+              correctAttemptedQuestionIds:
+                  controller.getCorrectAttemptedQuestionIds(),
+              attemptedQuestionIds: controller.getAttemptedQuestionIds()),
+        );
+      }
+    });
+
     return (controller.questionList.isNotEmpty)
         ? SafeArea(
             child: Center(
@@ -445,7 +470,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
                                         child: Text(
-                                          returnFormattedTime(
+                                          returnFormattedTime(controller
+                                                  .getTimeLimit() -
                                               stopwatch.elapsedMilliseconds),
                                           style: questionHeadingTextStyle,
                                         ),
