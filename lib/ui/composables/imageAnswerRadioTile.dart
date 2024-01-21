@@ -39,52 +39,48 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
             widget.quizController.selectedIndex = widget.index;
           }
         },
-        child: Card(
-          color: (widget.status == TileStatus.UNSELECTED)
-              ? headerBlue
-              : ((widget.status == TileStatus.CORRECT)
-                  ? correctGreen
-                  : incorrectRed),
-          borderOnForeground: true,
-          elevation: 10,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Card(
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: const BorderSide(width: 8, color: textWhite),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(
-                    widget.answerChoices[widget.index],
-                    fit: BoxFit.cover,
-                  ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(
+                    width: 8,
+                    color: (widget.status == TileStatus.UNSELECTED)
+                        ? textWhite
+                        : ((widget.status == TileStatus.CORRECT)
+                            ? correctGreen
+                            : incorrectRed)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(
+                  widget.answerChoices[widget.index],
+                  fit: BoxFit.cover,
                 ),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Radio<String>(
-                  toggleable: true,
-                  activeColor: buttonBlue,
-                  value: widget.answerChoices[widget.index],
-                  groupValue:
-                      widget.quizController.currentQuestionSelectedAnswer,
-                  onChanged: (widget.enabled)
-                      ? (String? value) {
-                          setState(() {
-                            _answer = value!;
-                            widget.quizController.selectAnswer(_answer);
-                            widget.quizController.selectedIndex = widget.index;
-                          });
-                        }
-                      : null,
-                ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Radio<String>(
+                toggleable: true,
+                activeColor: buttonBlue,
+                value: widget.answerChoices[widget.index],
+                groupValue: widget.quizController.currentQuestionSelectedAnswer,
+                onChanged: (widget.enabled)
+                    ? (String? value) {
+                        setState(() {
+                          _answer = value!;
+                          widget.quizController.selectAnswer(_answer);
+                          widget.quizController.selectedIndex = widget.index;
+                        });
+                      }
+                    : null,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

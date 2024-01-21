@@ -82,80 +82,103 @@ class _EndScreenState extends State<EndScreen> {
     return SafeArea(
       child: Center(
         child: Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(user.photoURL!),
-                          radius: 50.0,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Congratulations!, ${user.displayName}",
-                          style: headingTextStyle,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          //Rules page
-                          "You have scored ${args.score}",
-                          style: bodyTextStyle,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          //Rules page
-                          "Time taken by you is ${(args.timeTaken ~/ (1000 * 60))} minutes and ${(args.timeTaken ~/ 1000) % 60} seconds",
-                          style: bodyTextStyle,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: MaterialButton(
-                      onPressed: () async {
-                        _updateScore(
-                            args.score,
-                            args.timeTaken,
-                            args.attemptedQuestionIds,
-                            args.correctAttemptedQuestionIds);
-                      },
-                      height: 60,
-                      minWidth: 250,
-                      color: buttonBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: (!_isLoading)
-                          ? Text(
-                              "Continue",
-                              style: buttonTextStyle,
-                            )
-                          : const CircularProgressIndicator(
-                              color: textWhite,
+          body: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              decoration: BoxDecoration(gradient: gradient),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 0.9 * MediaQuery.of(context).size.width,
+                      height: 0.9 * MediaQuery.of(context).size.width,
+                      child: Card(
+                        elevation: 10,
+                        color: headerBlue,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 28.0),
+                              child: Text(
+                                "YOUR RESPONSE",
+                                style: headingTextStyle.copyWith(
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(user.photoURL!),
+                                radius: 50.0,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${user.displayName}",
+                                style: headingTextStyle,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                //Rules page
+                                "Score: ${args.score}",
+                                style: bodyTextStyle,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                //Rules page
+                                "Time: ${returnFormattedTime(args.timeTaken)}",
+                                style: bodyTextStyle,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              ],
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Center(
+                      child: MaterialButton(
+                        onPressed: () async {
+                          _updateScore(
+                              args.score,
+                              args.timeTaken,
+                              args.attemptedQuestionIds,
+                              args.correctAttemptedQuestionIds);
+                        },
+                        height: 60,
+                        minWidth: 250,
+                        color: buttonBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: (!_isLoading)
+                            ? Text(
+                                "Continue",
+                                style: buttonTextStyle,
+                              )
+                            : const CircularProgressIndicator(
+                                color: textGreen,
+                              ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
         ),

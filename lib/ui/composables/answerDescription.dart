@@ -35,13 +35,13 @@ class AnswerDescription extends StatelessWidget {
                         ? Center(
                             child: Text(
                               "Correct",
-                              style: buttonTextStyle,
+                              style: buttonTextStyle.copyWith(color: textWhite),
                             ),
                           )
                         : Center(
                             child: Text(
                               "Incorrect",
-                              style: buttonTextStyle,
+                              style: buttonTextStyle.copyWith(color: textWhite),
                             ),
                           ),
                   ),
@@ -56,7 +56,7 @@ class AnswerDescription extends StatelessWidget {
                     child: Center(
                       child: Text(
                         currentQuestion.difficulty.capitalizeFirst!,
-                        style: buttonTextStyle,
+                        style: buttonTextStyle.copyWith(color: textWhite),
                       ),
                     ),
                   ),
@@ -67,15 +67,15 @@ class AnswerDescription extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SizedBox(
-                      height: 0.4* MediaQuery.of(context).size.width,
-                      width: 0.4* MediaQuery.of(context).size.width,
+                      height: 0.4 * MediaQuery.of(context).size.width,
+                      width: 0.4 * MediaQuery.of(context).size.width,
                       child: Card(
                         elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                           side: const BorderSide(
                             width: 4,
-                            color: Color(0xFF646E91),
+                            color: textWhite,
                           ),
                         ),
                         child: ClipRRect(

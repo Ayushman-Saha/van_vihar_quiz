@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/credentials.dart';
 import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
@@ -58,11 +59,16 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: SizedBox(
-            height: 250.0,
-            width: 250.0,
-            child: Image.asset("assets/images/ic_logo.jpg"),
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: BoxDecoration(gradient: gradient),
+          child: Center(
+            child: SizedBox(
+              height: 250.0,
+              width: 250.0,
+              child: Image.asset("assets/images/ic_logo.jpg"),
+            ),
           ),
         ),
       ),

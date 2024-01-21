@@ -31,110 +31,116 @@ class _StartScreenState extends State<StartScreen> {
     // print(user);
     return SafeArea(
         child: Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(user.photoURL!),
-                      radius: 50.0,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Welcome, ${user.displayName}",
-                      style: headingTextStyle,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Quiz Rules",
-                      style: buttonTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-                    child: Text(
-                      //Rules page
-                      "\n 1.Eligibility: Open to all participants.\n\n 2.Fair Play: Answer questions honestly and independently.\n\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n\n 4.Prizes: Prizes are non-transferable and subject to availability.\n",
-                      style: bodyTextStyle,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: MaterialButton(
-                      onPressed: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        await controller.initializeQuestions();
-                        setState(() {
-                          _isLoading = false;
-                        });
-                        Navigator.of(context).pushNamed(
-                          QuizScreen.id,
-                          arguments:
-                              StartScreenArguments(controller: controller),
-                        );
-                      },
-                      height: 60.0,
-                      minWidth: 300.0,
-                      color: buttonBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(gradient: gradient),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(user.photoURL!),
+                        radius: 50.0,
                       ),
-                      child: (!_isLoading)
-                          ? Text(
-                              "Start",
-                              style: buttonTextStyle,
-                            )
-                          : const CircularProgressIndicator(
-                              color: textWhite,
-                            ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: MaterialButton(
-                      onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                        await GoogleSignIn().signOut();
-                        // await GoogleSignIn().disconnect();
-                        await Navigator.of(context).pushNamedAndRemoveUntil(
-                            OnboardingScreen.id, (route) => false);
-                      },
-                      height: 60.0,
-                      minWidth: 300.0,
-                      color: buttonBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Sign Out",
-                        style: buttonTextStyle,
+                        "Welcome, ${user.displayName}",
+                        style: headingTextStyle,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Quiz Rules",
+                        style:
+                            bodyTextStyle.copyWith(fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 8),
+                      child: Text(
+                        //Rules page
+                        "\n 1.Eligibility: Open to all participants.\n\n 2.Fair Play: Answer questions honestly and independently.\n\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n\n 4.Prizes: Prizes are non-transferable and subject to availability.\n",
+                        style: bodyTextStyle,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MaterialButton(
+                        onPressed: () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          await controller.initializeQuestions();
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          Navigator.of(context).pushNamed(
+                            QuizScreen.id,
+                            arguments:
+                                StartScreenArguments(controller: controller),
+                          );
+                        },
+                        height: 60.0,
+                        minWidth: 300.0,
+                        color: buttonBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: (!_isLoading)
+                            ? Text(
+                                "Start",
+                                style: buttonTextStyle,
+                              )
+                            : const CircularProgressIndicator(
+                                color: textGreen,
+                              ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MaterialButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          await GoogleSignIn().signOut();
+                          // await GoogleSignIn().disconnect();
+                          await Navigator.of(context).pushNamedAndRemoveUntil(
+                              OnboardingScreen.id, (route) => false);
+                        },
+                        height: 60.0,
+                        minWidth: 300.0,
+                        color: buttonBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Text(
+                          "Sign Out",
+                          style: buttonTextStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

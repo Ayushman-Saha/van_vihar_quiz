@@ -62,78 +62,108 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     return SafeArea(
       child: Center(
         child: Scaffold(
-          body: Center(
-            child: (controller.getLeaderboard().isNotEmpty)
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 8),
-                          child: Text(
-                            "Leaderboard",
-                            style: headingTextStyle,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "Cheers! Your response for today has been recorded.",
-                            style: bodyTextStyle,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 36.0),
-                            child: ListView.builder(
-                              itemCount: _leaderboard.length,
-                              itemBuilder: (context, index) {
-                                return LeaderboardTile(
-                                  rank: index + 1,
-                                  displayPicture:
-                                      _leaderboard[index].displayPicture,
-                                  name: _leaderboard[index].name,
-                                  score: _leaderboard[index].score,
-                                  timeTaken: _leaderboard[index].timeTaken,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: MaterialButton(
-                            onPressed: () async {
-                              await _clearScore();
-                            },
-                            height: 60,
-                            minWidth: 250,
-                            color: buttonBlue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: (!_isLoading)
-                                ? Text(
-                                    "Clear Attempt",
-                                    style: buttonTextStyle,
-                                  )
-                                : const CircularProgressIndicator(
-                                    color: textWhite,
+          body: (controller.getLeaderboard().isNotEmpty)
+              ? Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 0.75 * MediaQuery.of(context).size.height,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            gradient: gradient,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                topRight: Radius.circular(40))),
+                        child: Center(
+                            child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 36.0),
+                                  child: ListView.builder(
+                                    itemCount: _leaderboard.length,
+                                    itemBuilder: (context, index) {
+                                      return LeaderboardTile(
+                                        rank: index + 1,
+                                        displayPicture:
+                                            _leaderboard[index].displayPicture,
+                                        name: _leaderboard[index].name,
+                                        score: _leaderboard[index].score,
+                                        timeTaken:
+                                            _leaderboard[index].timeTaken,
+                                      );
+                                    },
                                   ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: MaterialButton(
+                                  onPressed: () async {
+                                    await _clearScore();
+                                  },
+                                  height: 60,
+                                  minWidth: 250,
+                                  color: buttonBlue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: (!_isLoading)
+                                      ? Text(
+                                          "Clear Attempt",
+                                          style: buttonTextStyle,
+                                        )
+                                      : const CircularProgressIndicator(
+                                          color: textGreen,
+                                        ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        )),
+                      ),
                     ),
-                  )
-                : const CircularProgressIndicator(
-                    color: textWhite,
-                  ),
-          ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        height: 0.25 * MediaQuery.of(context).size.height,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 16),
+                              child: Text(
+                                "Leaderboard",
+                                style: headingTextStyle,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                "Cheers! Your response for today has been recorded.",
+                                style: bodyTextStyle,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              : const CircularProgressIndicator(
+                  color: textWhite,
+                ),
         ),
       ),
     );

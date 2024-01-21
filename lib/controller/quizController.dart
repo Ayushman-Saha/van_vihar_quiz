@@ -38,8 +38,8 @@ class QuizController {
 
   Map<String, List<QuizQuestion>> questionList = {};
 
-  final List<String> _attemptedQuestionIds = [];
-  final List<String> _correctAttemptedQuestionIds = [];
+  late List<String> _attemptedQuestionIds = [];
+  late List<String> _correctAttemptedQuestionIds = [];
 
   void selectAnswer(String answer) {
     currentQuestionSelectedAnswer = answer;
@@ -119,8 +119,39 @@ class QuizController {
     currentQuestionSelectedAnswer = "";
   }
 
+  void _clearData() {
+    selectedIndex = -1;
+    correctIndex = -1;
+    currentQuestionSelectedAnswer = "";
+
+    currentQuestion = QuizQuestion(
+      question: "question",
+      hasAttachment: false,
+      answerDescription: "answerDescription",
+      answerType: "answerType",
+      answerChoices: ["answerChoices", "", "", ""],
+      correctAnswer: "correctAnswer",
+      difficulty: "",
+      id: "",
+    );
+
+    _currentQuestionIndex = 1;
+    _score = 0;
+
+    typeAttempts = 0;
+    currentType = "easy";
+
+    isLastQuestion = false;
+
+    questionList = {};
+
+    _attemptedQuestionIds = [];
+    _correctAttemptedQuestionIds = [];
+  }
+
 // Initialize questions in the controller, e.g., in the constructor
   Future<void> initializeQuestions() async {
+    _clearData();
     _quizDetails = await quizRepository.getQuizDetails();
     var questions = await quizRepository.getQuestions(
         _quizDetails.questionCount, _quizDetails.tags);

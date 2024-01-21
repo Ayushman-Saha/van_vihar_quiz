@@ -24,7 +24,7 @@ class LeaderboardTile extends StatelessWidget {
       child: SizedBox(
         height: 100,
         child: Card(
-          color: headerBlue,
+          color: Colors.white,
           elevation: 10,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -39,7 +39,7 @@ class LeaderboardTile extends StatelessWidget {
                     children: [
                       Text(
                         "#$rank",
-                        style: headingTextStyle,
+                        style: headingTextStyle.copyWith(color: textGreen),
                       ),
                       CircleAvatar(
                         backgroundImage: NetworkImage(displayPicture),
@@ -49,7 +49,7 @@ class LeaderboardTile extends StatelessWidget {
                         width: 150,
                         child: Text(
                           name,
-                          style: buttonTextStyle,
+                          style: buttonTextStyle.copyWith(color: textGreen),
                         ),
                       ),
                     ],
@@ -60,11 +60,11 @@ class LeaderboardTile extends StatelessWidget {
                   children: [
                     Text(
                       score.toString(),
-                      style: headingTextStyle,
+                      style: headingTextStyle.copyWith(color: textGreen),
                     ),
                     Text(
                       returnFormattedTime(timeTaken),
-                      style: bodyTextStyle,
+                      style: bodyTextStyle.copyWith(color: textGreen),
                     )
                   ],
                 )
