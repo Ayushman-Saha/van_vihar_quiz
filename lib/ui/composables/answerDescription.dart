@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/entities/quizQuestion.dart';
 
@@ -55,7 +54,7 @@ class AnswerDescription extends StatelessWidget {
                     color: headerBlue,
                     child: Center(
                       child: Text(
-                        currentQuestion.difficulty.capitalizeFirst!,
+                        currentQuestion.difficulty.toUpperCase(),
                         style: buttonTextStyle.copyWith(color: textWhite),
                       ),
                     ),

@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/controller/quizController.dart';
 import 'package:van_vihar_quiz/entities/startScreenArguments.dart';
 import 'package:van_vihar_quiz/ui/composables/logoHeader.dart';
+import 'package:van_vihar_quiz/ui/screens/deniedLocationScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/quizScreen.dart';
+
+import 'geofenceScreen.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -19,12 +24,64 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   late User user;
   bool _isLoading = false;
+  bool isGeofenceCrossed = false;
   final QuizController controller = QuizController();
 
   @override
   void initState() {
     super.initState();
     user = FirebaseAuth.instance.currentUser!;
+  }
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      Fluttertoast.showToast(
+          msg: "Enable location services to continue",
+          toastLength: Toast.LENGTH_LONG);
+      setState(() {
+        _isLoading = false;
+      });
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        Fluttertoast.showToast(
+            msg: "Location permissions must be granted in order to continue",
+            toastLength: Toast.LENGTH_LONG);
+        setState(() {
+          _isLoading = false;
+        });
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(DeniedLocationScreen.id, (route) => false);
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
   }
 
   @override
@@ -93,15 +150,24 @@ class _StartScreenState extends State<StartScreen> {
                         setState(() {
                           _isLoading = true;
                         });
-                        await controller.initializeQuestions();
+                        var position = await determinePosition();
+                        isGeofenceCrossed =
+                            await controller.initializeQuestions(
+                                position.latitude, position.longitude);
                         setState(() {
                           _isLoading = false;
                         });
-                        Navigator.of(context).pushNamed(
-                          QuizScreen.id,
-                          arguments:
-                              StartScreenArguments(controller: controller),
-                        );
+
+                        if (!isGeofenceCrossed) {
+                          Navigator.of(context).pushNamed(
+                            QuizScreen.id,
+                            arguments:
+                                StartScreenArguments(controller: controller),
+                          );
+                        } else {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              GeofenceScreen.id, (route) => false);
+                        }
                       },
                       height: 60.0,
                       minWidth: 300.0,

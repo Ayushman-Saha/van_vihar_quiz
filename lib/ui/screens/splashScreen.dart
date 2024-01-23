@@ -44,8 +44,11 @@ class _SplashScreenState extends State<SplashScreen> {
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       var data = json["data"]["createdAt"];
-      // print(DateTime.now().difference(DateTime.parse(data).toLocal()).inMinutes);
-      if (DateTime.now().difference(DateTime.parse(data).toLocal()).inHours <=
+      var nextDayTime = DateTime.now().add(const Duration(days: 1));
+      var specificTime = nextDayTime.copyWith(hour: 04, minute: 00, second: 00);
+      // print(specificTime);
+      // print(specificTime.difference(DateTime.parse(data).toLocal()).inHours);
+      if (specificTime.difference(DateTime.parse(data).toLocal()).inHours <=
           24) {
         Timer(
           const Duration(seconds: 2),

@@ -54,7 +54,6 @@ class _QuizScreenState extends State<QuizScreen> {
     t = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {});
     });
-    controller.initializeQuestions();
   }
 
   Future<void> _initAudioPlayer() async {

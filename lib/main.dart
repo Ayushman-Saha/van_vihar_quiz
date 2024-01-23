@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/firebase_options.dart';
+import 'package:van_vihar_quiz/ui/screens/deniedLocationScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/endScreen.dart';
+import 'package:van_vihar_quiz/ui/screens/geofenceScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/onboardingScreen.dart';
 import 'package:van_vihar_quiz/ui/screens/quizScreen.dart';
@@ -34,6 +36,8 @@ class MyApp extends StatelessWidget {
         QuizScreen.id: (context) => const QuizScreen(),
         EndScreen.id: (context) => const EndScreen(),
         LeaderboardScreen.id: (context) => const LeaderboardScreen(),
+        DeniedLocationScreen.id: (context) => const DeniedLocationScreen(),
+        GeofenceScreen.id: (context) => const GeofenceScreen()
       },
     );
   }

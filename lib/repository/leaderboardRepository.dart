@@ -6,8 +6,8 @@ import 'package:van_vihar_quiz/entities/leaderboardData.dart';
 
 class LeaderboardRepository {
   Future<List<LeaderboardData>> getQuestions() async {
-    var response =
-        await http.get(Uri.parse("${BASE_URL}/quizResult/getLeaderboard"));
+    var response = await http
+        .get(Uri.parse("${BASE_URL}/quizResult/getLeaderboard?size=10"));
     return _responseToLeaderboardData(response);
   }
 

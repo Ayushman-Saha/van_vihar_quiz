@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:van_vihar_quiz/entities/quizDetailsData.dart';
 
 import '../entities/quizQuestion.dart';
@@ -34,7 +35,7 @@ class QuizController {
   bool isLastQuestion = false;
   String currentQuestionSelectedAnswer = "";
 
-  Map numberOfAttempts = {"easy": 4, "medium": 4, "hard": 2};
+  Map numberOfAttempts = {"easy": 4, "medium": 3, "hard": 3};
 
   Map<String, List<QuizQuestion>> questionList = {};
 
@@ -87,6 +88,20 @@ class QuizController {
 
   int getScore() {
     return _score;
+  }
+
+  bool isGeofenceCrossed(double lat, double long) {
+    if (_quizDetails.isGeofenceEnabled) {
+      var distance = Geolocator.distanceBetween(
+          lat, long, _quizDetails.limitLatitude, _quizDetails.limitLongitude);
+      if (distance <= _quizDetails.range) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   void nextQuestion() {
@@ -154,12 +169,13 @@ class QuizController {
   }
 
 // Initialize questions in the controller, e.g., in the constructor
-  Future<void> initializeQuestions() async {
+  Future<bool> initializeQuestions(double lat, double long) async {
     _clearData();
     _quizDetails = await quizRepository.getQuizDetails();
     var questions = await quizRepository.getQuestions(
         _quizDetails.questionCount, _quizDetails.tags);
     questionList = questions;
     currentQuestion = questions[currentType]![0];
+    return isGeofenceCrossed(lat, long);
   }
 }

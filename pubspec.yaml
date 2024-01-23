@@ -40,11 +40,13 @@ dependencies:
   flutter_svg: ^2.0.5
   google_fonts: ^4.0.4
   google_sign_in: ^6.1.6
-  get: ^4.6.5
   fluttertoast: ^8.2.4
   just_audio: ^0.9.36
   http: ^0.13.6
   flutter_launcher_icons: ^0.13.1
+  geolocator: ^10.1.0
+  permission_handler: ^11.0.1
+#  app_settings: ^5.1.1
 
 dev_dependencies:
   flutter_test:

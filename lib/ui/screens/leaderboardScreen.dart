@@ -67,7 +67,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   String _differenceFromNextDay() {
     var currentDate = DateTime.now();
     var tomorrow = currentDate.add(const Duration(days: 1));
-    tomorrow = tomorrow.copyWith(hour: 00, minute: 00, second: 00);
+    tomorrow = tomorrow.copyWith(hour: 04, minute: 00, second: 00);
     var difference = tomorrow.difference(currentDate).inMilliseconds;
 
     String seconds = ((difference ~/ 1000) % 60).toString().padLeft(2, '0');

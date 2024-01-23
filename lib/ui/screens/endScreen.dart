@@ -87,7 +87,7 @@ class _EndScreenState extends State<EndScreen> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              decoration: BoxDecoration(color: textWhite),
+              decoration: const BoxDecoration(color: textWhite),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
