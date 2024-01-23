@@ -66,7 +66,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
 
   String _differenceFromNextDay() {
     var currentDate = DateTime.now();
-    var tomorrow = currentDate.add(const Duration(days: 1));
+    DateTime tomorrow;
+    if (currentDate.hour >= 00 && currentDate.hour < 04) {
+      tomorrow = currentDate;
+    } else {
+      tomorrow = currentDate.add(const Duration(days: 1));
+    }
     tomorrow = tomorrow.copyWith(hour: 04, minute: 00, second: 00);
     var difference = tomorrow.difference(currentDate).inMilliseconds;
 
@@ -113,6 +118,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                     itemCount: _leaderboard.length,
                                     itemBuilder: (context, index) {
                                       return LeaderboardTile(
+                                        uid: _leaderboard[index].uid,
                                         rank: index + 1,
                                         displayPicture:
                                             _leaderboard[index].displayPicture,
@@ -125,28 +131,28 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: MaterialButton(
-                                  onPressed: () async {
-                                    await _clearScore();
-                                  },
-                                  height: 60,
-                                  minWidth: 250,
-                                  color: buttonGreen,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: (!_isLoading)
-                                      ? Text(
-                                          "Clear Attempt",
-                                          style: buttonTextStyle,
-                                        )
-                                      : const CircularProgressIndicator(
-                                          color: textGreen,
-                                        ),
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(20.0),
+                              //   child: MaterialButton(
+                              //     onPressed: () async {
+                              //       await _clearScore();
+                              //     },
+                              //     height: 60,
+                              //     minWidth: 250,
+                              //     color: buttonGreen,
+                              //     shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(15),
+                              //     ),
+                              //     child: (!_isLoading)
+                              //         ? Text(
+                              //             "Clear Attempt",
+                              //             style: buttonTextStyle,
+                              //           )
+                              //         : const CircularProgressIndicator(
+                              //             color: textGreen,
+                              //           ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         )),

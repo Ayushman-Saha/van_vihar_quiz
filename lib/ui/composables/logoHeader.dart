@@ -7,7 +7,7 @@ class LogoHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 0.1 * MediaQuery.of(context).size.height,
+      height: 0.13 * MediaQuery.of(context).size.height,
       width: double.infinity,
       decoration: BoxDecoration(
           // border: Border.all(color: textWhite),
@@ -33,11 +33,21 @@ class LogoHeader extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              "Van Vihar Bhopal",
-              style: buttonTextStyle.copyWith(
-                color: textWhite,
-                fontSize: 20,
+            SizedBox(
+              width: 0.45 * MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Van Vihar National Park",
+                    style: buttonTextStyle.copyWith(
+                      color: textWhite,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
             Padding(

@@ -56,10 +56,20 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.network(
-                  widget.answerChoices[widget.index],
-                  fit: BoxFit.cover,
-                ),
+                child: Image.network(widget.answerChoices[widget.index],
+                    fit: BoxFit.cover, loadingBuilder: (BuildContext context,
+                        Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: backgroundGreen,
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                }),
               ),
             ),
             Align(

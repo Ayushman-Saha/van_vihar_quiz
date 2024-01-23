@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:van_vihar_quiz/constants.dart';
 
@@ -9,6 +10,7 @@ class LeaderboardTile extends StatelessWidget {
     required this.score,
     required this.timeTaken,
     required this.rank,
+    required this.uid,
   });
 
   final int rank;
@@ -16,6 +18,7 @@ class LeaderboardTile extends StatelessWidget {
   final String name;
   final int score;
   final int timeTaken;
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,9 @@ class LeaderboardTile extends StatelessWidget {
       child: SizedBox(
         height: 100,
         child: Card(
-          color: Colors.white,
+          color: (FirebaseAuth.instance.currentUser?.uid == uid)
+              ? backgroundGreen
+              : Colors.white,
           elevation: 10,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -39,7 +44,11 @@ class LeaderboardTile extends StatelessWidget {
                     children: [
                       Text(
                         "#$rank",
-                        style: headingTextStyle.copyWith(color: textGreen),
+                        style: headingTextStyle.copyWith(
+                            color:
+                                (FirebaseAuth.instance.currentUser?.uid == uid)
+                                    ? Colors.white
+                                    : backgroundGreen),
                       ),
                       CircleAvatar(
                         backgroundImage: NetworkImage(displayPicture),
@@ -49,7 +58,11 @@ class LeaderboardTile extends StatelessWidget {
                         width: 150,
                         child: Text(
                           name,
-                          style: buttonTextStyle.copyWith(color: textGreen),
+                          style: buttonTextStyle.copyWith(
+                              color: (FirebaseAuth.instance.currentUser?.uid ==
+                                      uid)
+                                  ? Colors.white
+                                  : backgroundGreen),
                         ),
                       ),
                     ],
@@ -60,11 +73,17 @@ class LeaderboardTile extends StatelessWidget {
                   children: [
                     Text(
                       score.toString(),
-                      style: headingTextStyle.copyWith(color: textGreen),
+                      style: headingTextStyle.copyWith(
+                          color: (FirebaseAuth.instance.currentUser?.uid == uid)
+                              ? Colors.white
+                              : backgroundGreen),
                     ),
                     Text(
                       returnFormattedTime(timeTaken),
-                      style: bodyTextStyle.copyWith(color: textGreen),
+                      style: bodyTextStyle.copyWith(
+                          color: (FirebaseAuth.instance.currentUser?.uid == uid)
+                              ? Colors.white
+                              : backgroundGreen),
                     )
                   ],
                 )

@@ -88,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: SizedBox(
                           width: 0.5 * MediaQuery.of(context).size.width,
                           child: Text(
-                            "Play and get a chance to get a free ticket!",
+                            "Enter into the mystical world of Van Vihar!",
                             style: GoogleFonts.poppins(
                               textStyle: const TextStyle(color: buttonGreen),
                               fontWeight: FontWeight.bold,
@@ -140,10 +140,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Developed by IISER Bhopal',
-                          style: bodyTextStyle.copyWith(color: backgroundGreen),
-                          textAlign: TextAlign.center,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Developed by Team ThunderByte, IISER Bhopal',
+                              style: bodyTextStyle.copyWith(
+                                  color: backgroundGreen,
+                                  fontWeight: FontWeight.w700),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       )
                     ],

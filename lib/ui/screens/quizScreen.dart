@@ -161,29 +161,65 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(2.0),
-                                                child: Card(
-                                                  elevation: 10,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    side: const BorderSide(
-                                                      width: 4,
-                                                      color: textWhite,
+                                                child: SizedBox(
+                                                  height: 0.5 *
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
+                                                  width: 0.5 *
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
+                                                  child: Card(
+                                                    elevation: 10,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      side: const BorderSide(
+                                                        width: 4,
+                                                        color: textWhite,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: Image.network(
-                                                      width: 0.5 *
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      controller.currentQuestion
-                                                          .attachment!,
-                                                      fit: BoxFit.cover,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Image.network(
+                                                          width: 0.5 *
+                                                              MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width,
+                                                          controller
+                                                              .currentQuestion
+                                                              .attachment!,
+                                                          fit: BoxFit.cover,
+                                                          loadingBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  Widget child,
+                                                                  ImageChunkEvent?
+                                                                      loadingProgress) {
+                                                        if (loadingProgress ==
+                                                            null) return child;
+                                                        return Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color:
+                                                                backgroundGreen,
+                                                            value: loadingProgress
+                                                                        .expectedTotalBytes !=
+                                                                    null
+                                                                ? loadingProgress
+                                                                        .cumulativeBytesLoaded /
+                                                                    loadingProgress
+                                                                        .expectedTotalBytes!
+                                                                : null,
+                                                          ),
+                                                        );
+                                                      }),
                                                     ),
                                                   ),
                                                 ),
@@ -408,6 +444,23 @@ class _QuizScreenState extends State<QuizScreen> {
                                                       style: buttonTextStyle,
                                                     ),
                                                   ),
+                                    const SizedBox(
+                                      height: 40,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Developed by Team ThunderByte, IISER Bhopal',
+                                            style: bodyTextStyle.copyWith(
+                                                color: backgroundGreen,
+                                                fontWeight: FontWeight.w700),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ],

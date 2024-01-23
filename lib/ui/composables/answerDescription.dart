@@ -80,9 +80,22 @@ class AnswerDescription extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            currentQuestion.descriptionAttachment!,
-                            fit: BoxFit.fill,
-                          ),
+                              currentQuestion.descriptionAttachment!,
+                              fit: BoxFit.fill, loadingBuilder:
+                                  (BuildContext context, Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: backgroundGreen,
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          }),
                         ),
                       ),
                     ),

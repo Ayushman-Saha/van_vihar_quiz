@@ -134,12 +134,15 @@ class _StartScreenState extends State<StartScreen> {
                         const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
                     child: Text(
                       //Rules page
-                      "\n 1.Eligibility: Open to all participants.\n\n 2.Fair Play: Answer questions honestly and independently.\n\n 3.Participation: Engage in quizzes for a chance to win free tickets.\n\n 4.Prizes: Prizes are non-transferable and subject to availability.\n",
+                      "\n 1.Eligibility: Open to all participants.\n\n 2.Fair Play: Answer questions honestly and independently.\n\n 3. Quiz Time Limit: 100 seconds. The timer pauses for additional reading on each question. \n\n4.Participation: Engage in quizzes to test knowledge and win exciting prizes\*.\n\n 5.Prizes: Prizes are non-transferable and subject to availability\*.\n\n \* Terms and condition apply",
                       style: bodyTextStyle.copyWith(color: backgroundGreen),
                       textAlign: TextAlign.start,
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 40,
               ),
               Column(
                 children: [

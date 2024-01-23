@@ -46,10 +46,11 @@ class _SplashScreenState extends State<SplashScreen> {
       var data = json["data"]["createdAt"];
       var nextDayTime = DateTime.now().add(const Duration(days: 1));
       var specificTime = nextDayTime.copyWith(hour: 04, minute: 00, second: 00);
+      // print(DateTime.parse(data).toLocal());
       // print(specificTime);
       // print(specificTime.difference(DateTime.parse(data).toLocal()).inHours);
-      if (specificTime.difference(DateTime.parse(data).toLocal()).inHours <=
-          24) {
+      if (specificTime.difference(DateTime.parse(data).toLocal()).inHours <
+          28) {
         Timer(
           const Duration(seconds: 2),
           () => Navigator.of(context)
@@ -85,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 250.0,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset("assets/images/ic_logo.jpg"),
+                child: Image.asset("assets/images/ic_logo.png"),
               ),
             ),
           ),

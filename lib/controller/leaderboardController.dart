@@ -14,7 +14,7 @@ class LeaderboardController {
   }
 
   Future<void> initializeLeaderboard() async {
-    var leaderboard = await leaderboardRepository.getQuestions();
+    var leaderboard = await leaderboardRepository.getLeaderboard();
     _leaderboard = leaderboard;
   }
 }
