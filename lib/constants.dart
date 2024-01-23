@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const backgroundBlue = Color(0XFF252C4B);
+const backgroundGreen = Color(0XFF214D3C);
 const headerBlue = Color(0XFF36416F);
 const textWhite = Color(0xFFEAEAEA);
-const textGreen = Color(0XFF48ACA2);
+const textGreen = Color(0XFF214D3C);
 const textGrey = Color(0XFF929BC3);
-const buttonBlue = Color(0xFFEAF4FE);
+const buttonGreen = Color(0xFF214D3C);
 const correctGreen = Color(0xFF5FC521);
 const incorrectRed = Color(0XFFE51937);
 
@@ -17,7 +17,7 @@ TextStyle headingTextStyle = GoogleFonts.poppins(
 );
 
 TextStyle buttonTextStyle = GoogleFonts.poppins(
-  color: textGreen,
+  color: textWhite,
   fontSize: 16.0,
   fontWeight: FontWeight.w700,
 );
@@ -39,7 +39,7 @@ enum TileStatus { UNSELECTED, CORRECT, INCORRECT }
 String returnFormattedTime(int milli) {
   String seconds = ((milli ~/ 1000) % 60)
       .toString()
-      .padLeft(2, "0"); // this is for the second
+      .padLeft(2, "0"); // this is  for the second
   String minutes = ((milli ~/ 1000) ~/ 60)
       .toString()
       .padLeft(2, "0"); // this is for the minute

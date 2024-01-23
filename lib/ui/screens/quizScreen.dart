@@ -117,322 +117,301 @@ class _QuizScreenState extends State<QuizScreen> {
                       child: Container(
                         width: double.infinity,
                         height: 0.7 * MediaQuery.of(context).size.height,
-                        decoration: BoxDecoration(
-                          gradient: gradient,
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          // gradient: gradient,
+                          color: textWhite,
+                          borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
                               topLeft: Radius.circular(40)),
                         ),
                         child: SingleChildScrollView(
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                                horizontal: 24,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 24,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Q. ${controller.currentQuestion.question}",
-                                              style: headingTextStyle,
-                                              textAlign: TextAlign.start,
-                                            ),
-                                          ],
-                                        ),
+                                      Text(
+                                        "Q. ${controller.currentQuestion.question}",
+                                        style: headingTextStyle.copyWith(
+                                            color: textGreen),
+                                        textAlign: TextAlign.start,
                                       ),
                                     ],
                                   ),
-                                  (controller.currentQuestion.hasAttachment &&
-                                          !isValidated)
-                                      ? ((controller.currentQuestion
-                                                  .attachmentType ==
-                                              "image")
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.all(2.0),
-                                              child: Center(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(2.0),
-                                                  child: Card(
-                                                    elevation: 10,
+                                ),
+                                (controller.currentQuestion.hasAttachment &&
+                                        !isValidated)
+                                    ? ((controller.currentQuestion
+                                                .attachmentType ==
+                                            "image")
+                                        ? Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Center(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
+                                                child: Card(
+                                                  elevation: 10,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    side: const BorderSide(
+                                                      width: 4,
+                                                      color: textWhite,
+                                                    ),
+                                                  ),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child: Image.network(
+                                                      width: 0.5 *
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      controller.currentQuestion
+                                                          .attachment!,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : Center(
+                                            child: SizedBox(
+                                              height: 60,
+                                              child: Card(
+                                                elevation: 10,
+                                                color: textGreen,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Expanded(
+                                                      child: SvgPicture.asset(
+                                                        color: textWhite,
+                                                        "assets/images/waves.svg",
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      color: textWhite,
+                                                      onPressed: () async {
+                                                        setState(() {
+                                                          _isAudioLoading =
+                                                              true;
+                                                        });
+                                                        await _initAudioPlayer();
+                                                        await _player.play();
+                                                        setState(() {
+                                                          _isAudioLoading =
+                                                              false;
+                                                        });
+                                                      },
+                                                      icon: (!_isAudioLoading)
+                                                          ? const Icon(
+                                                              Icons.play_circle,
+                                                              size: 40,
+                                                            )
+                                                          : const CircularProgressIndicator(
+                                                              color: textWhite,
+                                                            ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ))
+                                    : const SizedBox(
+                                        height: 1,
+                                      ),
+                                (!isAttempted)
+                                    ? (controller.currentQuestion.answerType ==
+                                            "text")
+                                        ? TextAnswerRadioButton(
+                                            quizController: controller,
+                                            answerChoices: controller
+                                                .currentQuestion.answerChoices,
+                                            correctAnswer: controller
+                                                .currentQuestion.correctAnswer,
+                                            answerType: controller
+                                                .currentQuestion.answerType,
+                                            status: status,
+                                            enabled:
+                                                (!isAttempted && !isValidated),
+                                          )
+                                        : ImageAnswerRadioButton(
+                                            quizController: controller,
+                                            answerChoices: controller
+                                                .currentQuestion.answerChoices,
+                                            correctAnswer: controller
+                                                .currentQuestion.correctAnswer,
+                                            answerType: controller
+                                                .currentQuestion.answerType,
+                                            status: status,
+                                            enabled:
+                                                (!isAttempted && !isValidated),
+                                          )
+                                    : AnswerDescription(
+                                        currentQuestion:
+                                            controller.currentQuestion,
+                                        isCorrect: isCorrect,
+                                      ),
+                                Column(
+                                  children: [
+                                    (!isAttempted && !isValidated)
+                                        ? MaterialButton(
+                                            onPressed: () {
+                                              if (controller
+                                                  .currentQuestionSelectedAnswer
+                                                  .isNotEmpty) {
+                                                stopwatch.stop();
+                                                _player.stop();
+                                                setState(() {
+                                                  int correctIndex = controller
+                                                      .validateAnswer();
+                                                  if (controller
+                                                          .selectedIndex !=
+                                                      correctIndex) {
+                                                    status[correctIndex] =
+                                                        TileStatus.CORRECT;
+                                                    status[controller
+                                                            .selectedIndex] =
+                                                        TileStatus.INCORRECT;
+                                                    isCorrect = false;
+                                                  } else {
+                                                    status[controller
+                                                            .selectedIndex] =
+                                                        TileStatus.CORRECT;
+                                                    isCorrect = true;
+                                                  }
+                                                  // controller.nextQuestion();
+                                                  isValidated = true;
+                                                });
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                  msg:
+                                                      "Select an option to continue",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                );
+                                              }
+                                              // print(controller.currentQuestionSelectedAnswer);
+                                            },
+                                            height: 60,
+                                            minWidth: 250,
+                                            color: buttonGreen,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Text(
+                                              "Check Answer",
+                                              style: buttonTextStyle,
+                                            ),
+                                          )
+                                        : (isValidated && !isAttempted)
+                                            ? MaterialButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isAttempted = true;
+                                                  });
+                                                  // print(controller.currentQuestionSelectedAnswer);
+                                                },
+                                                height: 60,
+                                                minWidth: 250,
+                                                color: buttonGreen,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Text(
+                                                  "See Solution",
+                                                  style: buttonTextStyle,
+                                                ),
+                                              )
+                                            : (!controller.isLastQuestion)
+                                                ? MaterialButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        clearState();
+                                                        _player.stop();
+                                                        controller
+                                                            .nextQuestion();
+                                                        stopwatch.start();
+                                                      });
+                                                      // print(controller.currentQuestionSelectedAnswer);
+                                                    },
+                                                    height: 60,
+                                                    minWidth: 250,
+                                                    color: buttonGreen,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
-                                                      side: const BorderSide(
-                                                        width: 4,
-                                                        color: textWhite,
-                                                      ),
+                                                              15),
                                                     ),
-                                                    child: ClipRRect(
+                                                    child: Text(
+                                                      "Next",
+                                                      style: buttonTextStyle,
+                                                    ),
+                                                  )
+                                                : MaterialButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        stopwatch.stop();
+                                                        _player.stop();
+                                                        Navigator.of(context)
+                                                            .pushNamedAndRemoveUntil(
+                                                          EndScreen.id,
+                                                          ModalRoute.withName(
+                                                            StartScreen.id,
+                                                          ),
+                                                          arguments: EndScreenArguments(
+                                                              score: controller
+                                                                  .getScore(),
+                                                              timeTaken: stopwatch
+                                                                  .elapsedMilliseconds,
+                                                              correctAttemptedQuestionIds:
+                                                                  controller
+                                                                      .getCorrectAttemptedQuestionIds(),
+                                                              attemptedQuestionIds:
+                                                                  controller
+                                                                      .getAttemptedQuestionIds()),
+                                                        );
+                                                      });
+                                                      // print(controller.currentQuestionSelectedAnswer);
+                                                    },
+                                                    height: 60,
+                                                    minWidth: 250,
+                                                    color: buttonGreen,
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
-                                                      child: Image.network(
-                                                        width: 0.5 *
-                                                            MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width,
-                                                        controller
-                                                            .currentQuestion
-                                                            .attachment!,
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                              15),
+                                                    ),
+                                                    child: Text(
+                                                      "Submit",
+                                                      style: buttonTextStyle,
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                            )
-                                          : Center(
-                                              child: SizedBox(
-                                                height: 60,
-                                                child: Card(
-                                                  elevation: 10,
-                                                  color: textGreen,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Expanded(
-                                                        child: SvgPicture.asset(
-                                                          color: textWhite,
-                                                          "assets/images/waves.svg",
-                                                        ),
-                                                      ),
-                                                      IconButton(
-                                                        color: textWhite,
-                                                        onPressed: () async {
-                                                          setState(() {
-                                                            _isAudioLoading =
-                                                                true;
-                                                          });
-                                                          await _initAudioPlayer();
-                                                          await _player.play();
-                                                          setState(() {
-                                                            _isAudioLoading =
-                                                                false;
-                                                          });
-                                                        },
-                                                        icon: (!_isAudioLoading)
-                                                            ? const Icon(
-                                                                Icons
-                                                                    .play_circle,
-                                                                size: 40,
-                                                              )
-                                                            : const CircularProgressIndicator(
-                                                                color:
-                                                                    textWhite,
-                                                              ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ))
-                                      : const SizedBox(
-                                          height: 1,
-                                        ),
-                                  (!isAttempted)
-                                      ? (controller
-                                                  .currentQuestion.answerType ==
-                                              "text")
-                                          ? TextAnswerRadioButton(
-                                              quizController: controller,
-                                              answerChoices: controller
-                                                  .currentQuestion
-                                                  .answerChoices,
-                                              correctAnswer: controller
-                                                  .currentQuestion
-                                                  .correctAnswer,
-                                              answerType: controller
-                                                  .currentQuestion.answerType,
-                                              status: status,
-                                              enabled: (!isAttempted &&
-                                                  !isValidated),
-                                            )
-                                          : ImageAnswerRadioButton(
-                                              quizController: controller,
-                                              answerChoices: controller
-                                                  .currentQuestion
-                                                  .answerChoices,
-                                              correctAnswer: controller
-                                                  .currentQuestion
-                                                  .correctAnswer,
-                                              answerType: controller
-                                                  .currentQuestion.answerType,
-                                              status: status,
-                                              enabled: (!isAttempted &&
-                                                  !isValidated),
-                                            )
-                                      : AnswerDescription(
-                                          currentQuestion:
-                                              controller.currentQuestion,
-                                          isCorrect: isCorrect,
-                                        ),
-                                  Column(
-                                    children: [
-                                      (!isAttempted && !isValidated)
-                                          ? MaterialButton(
-                                              onPressed: () {
-                                                if (controller
-                                                    .currentQuestionSelectedAnswer
-                                                    .isNotEmpty) {
-                                                  stopwatch.stop();
-                                                  _player.stop();
-                                                  setState(() {
-                                                    int correctIndex =
-                                                        controller
-                                                            .validateAnswer();
-                                                    if (controller
-                                                            .selectedIndex !=
-                                                        correctIndex) {
-                                                      status[correctIndex] =
-                                                          TileStatus.CORRECT;
-                                                      status[controller
-                                                              .selectedIndex] =
-                                                          TileStatus.INCORRECT;
-                                                      isCorrect = false;
-                                                    } else {
-                                                      status[controller
-                                                              .selectedIndex] =
-                                                          TileStatus.CORRECT;
-                                                      isCorrect = true;
-                                                    }
-                                                    // controller.nextQuestion();
-                                                    isValidated = true;
-                                                  });
-                                                } else {
-                                                  Fluttertoast.showToast(
-                                                    msg:
-                                                        "Select an option to continue",
-                                                    toastLength:
-                                                        Toast.LENGTH_SHORT,
-                                                  );
-                                                }
-                                                // print(controller.currentQuestionSelectedAnswer);
-                                              },
-                                              height: 60,
-                                              minWidth: 250,
-                                              color: buttonBlue,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Text(
-                                                "Check Answer",
-                                                style: buttonTextStyle,
-                                              ),
-                                            )
-                                          : (isValidated && !isAttempted)
-                                              ? MaterialButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      isAttempted = true;
-                                                    });
-                                                    // print(controller.currentQuestionSelectedAnswer);
-                                                  },
-                                                  height: 60,
-                                                  minWidth: 250,
-                                                  color: buttonBlue,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15),
-                                                  ),
-                                                  child: Text(
-                                                    "See Solution",
-                                                    style: buttonTextStyle,
-                                                  ),
-                                                )
-                                              : (!controller.isLastQuestion)
-                                                  ? MaterialButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          clearState();
-                                                          _player.stop();
-                                                          controller
-                                                              .nextQuestion();
-                                                          stopwatch.start();
-                                                        });
-                                                        // print(controller.currentQuestionSelectedAnswer);
-                                                      },
-                                                      height: 60,
-                                                      minWidth: 250,
-                                                      color: buttonBlue,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                      child: Text(
-                                                        "Next",
-                                                        style: buttonTextStyle,
-                                                      ),
-                                                    )
-                                                  : MaterialButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          stopwatch.stop();
-                                                          _player.stop();
-                                                          Navigator.of(context)
-                                                              .pushNamedAndRemoveUntil(
-                                                            EndScreen.id,
-                                                            ModalRoute.withName(
-                                                              StartScreen.id,
-                                                            ),
-                                                            arguments: EndScreenArguments(
-                                                                score: controller
-                                                                    .getScore(),
-                                                                timeTaken: stopwatch
-                                                                    .elapsedMilliseconds,
-                                                                correctAttemptedQuestionIds:
-                                                                    controller
-                                                                        .getCorrectAttemptedQuestionIds(),
-                                                                attemptedQuestionIds:
-                                                                    controller
-                                                                        .getAttemptedQuestionIds()),
-                                                          );
-                                                        });
-                                                        // print(controller.currentQuestionSelectedAnswer);
-                                                      },
-                                                      height: 60,
-                                                      minWidth: 250,
-                                                      color: buttonBlue,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                      ),
-                                                      child: Text(
-                                                        "Submit",
-                                                        style: buttonTextStyle,
-                                                      ),
-                                                    ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -441,6 +420,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     Align(
                       alignment: Alignment.topCenter,
                       child: Container(
+                        height: 0.3 * MediaQuery.of(context).size.height,
                         child: Column(
                           children: [
                             const LogoHeader(),

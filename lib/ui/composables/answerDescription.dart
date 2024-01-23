@@ -95,7 +95,7 @@ class AnswerDescription extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 currentQuestion.answerDescription,
-                style: bodyTextStyle,
+                style: bodyTextStyle.copyWith(color: backgroundGreen),
               ),
             ),
             const SizedBox(

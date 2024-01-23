@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,14 +40,26 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkForAttempt() async {
     var response = await http
         .get(Uri.parse("${BASE_URL}/quizResult/get?uid=${user!.uid}"));
-    // print(response.statusCode);
-    if (response.statusCode != 404) {
-      Timer(
-        const Duration(seconds: 2),
-        () => Navigator.of(context)
-            .pushNamedAndRemoveUntil(LeaderboardScreen.id, (route) => false),
-      );
-    } else {
+
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      var data = json["data"]["createdAt"];
+      // print(DateTime.now().difference(DateTime.parse(data).toLocal()).inMinutes);
+      if (DateTime.now().difference(DateTime.parse(data).toLocal()).inHours <=
+          24) {
+        Timer(
+          const Duration(seconds: 2),
+          () => Navigator.of(context)
+              .pushNamedAndRemoveUntil(LeaderboardScreen.id, (route) => false),
+        );
+      } else {
+        Timer(
+          const Duration(seconds: 2),
+          () => Navigator.of(context)
+              .pushNamedAndRemoveUntil(StartScreen.id, (route) => false),
+        );
+      }
+    } else if (response.statusCode == 404) {
       Timer(
         const Duration(seconds: 2),
         () => Navigator.of(context)
@@ -62,12 +75,15 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(gradient: gradient),
+          decoration: const BoxDecoration(color: backgroundGreen),
           child: Center(
             child: SizedBox(
               height: 250.0,
               width: 250.0,
-              child: Image.asset("assets/images/ic_logo.jpg"),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset("assets/images/ic_logo.jpg"),
+              ),
             ),
           ),
         ),

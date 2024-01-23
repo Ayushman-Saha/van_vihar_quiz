@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +24,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   late final User user;
   bool _isLoading = false;
 
+  late Timer t;
+
   final LeaderboardController controller = LeaderboardController();
   late List<LeaderboardData> _leaderboard;
 
@@ -34,6 +38,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             _leaderboard = controller.getLeaderboard();
           })
         });
+    t = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+      setState(() {});
+    });
   }
 
   Future<void> _clearScore() async {
@@ -57,6 +64,21 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     });
   }
 
+  String _differenceFromNextDay() {
+    var currentDate = DateTime.now();
+    var tomorrow = currentDate.add(const Duration(days: 1));
+    tomorrow = tomorrow.copyWith(hour: 00, minute: 00, second: 00);
+    var difference = tomorrow.difference(currentDate).inMilliseconds;
+
+    String seconds = ((difference ~/ 1000) % 60).toString().padLeft(2, '0');
+    String minutes =
+        (((difference ~/ 1000) ~/ 60) % 60).toString().padLeft(2, '0');
+    String hours =
+        (((difference ~/ 1000) ~/ 60) ~/ 60).toString().padLeft(2, '0');
+
+    return "$hours:$minutes:$seconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,9 +92,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       child: Container(
                         height: 0.75 * MediaQuery.of(context).size.height,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            gradient: gradient,
-                            borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                            // gradient: gradient,
+                            color: textWhite,
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(40),
                                 topRight: Radius.circular(40))),
                         child: Center(
@@ -110,7 +133,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                   },
                                   height: 60,
                                   minWidth: 250,
-                                  color: buttonBlue,
+                                  color: buttonGreen,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
@@ -131,41 +154,69 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: Container(
+                      child: SizedBox(
                         height: 0.25 * MediaQuery.of(context).size.height,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 16),
-                              child: Text(
-                                "Leaderboard",
-                                style: headingTextStyle,
-                                textAlign: TextAlign.start,
+                            SizedBox(
+                              width: 0.7 * MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 16),
+                                    child: Text(
+                                      "Leaderboard",
+                                      style: headingTextStyle,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child: Text(
+                                      "Cheers! Your response for today has been recorded.",
+                                      style: bodyTextStyle,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text(
-                                "Cheers! Your response for today has been recorded.",
-                                style: bodyTextStyle,
-                                textAlign: TextAlign.start,
+                            SizedBox(
+                              width: 0.3 * MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Participate again in ${_differenceFromNextDay()}",
+                                    style: headingTextStyle,
+                                  ),
+                                ],
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ),
                     )
                   ],
                 )
-              : const CircularProgressIndicator(
-                  color: textWhite,
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: textWhite,
+                  ),
                 ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    t.cancel();
   }
 }

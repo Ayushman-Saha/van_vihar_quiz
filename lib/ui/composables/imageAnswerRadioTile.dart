@@ -66,7 +66,7 @@ class _ImageAnswerRadioTileState extends State<ImageAnswerRadioTile> {
               alignment: Alignment.topLeft,
               child: Radio<String>(
                 toggleable: true,
-                activeColor: buttonBlue,
+                activeColor: buttonGreen,
                 value: widget.answerChoices[widget.index],
                 groupValue: widget.quizController.currentQuestionSelectedAnswer,
                 onChanged: (widget.enabled)

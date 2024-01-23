@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:van_vihar_quiz/constants.dart';
 import 'package:van_vihar_quiz/credentials.dart';
+import 'package:van_vihar_quiz/ui/composables/logoHeader.dart';
 import 'package:van_vihar_quiz/ui/screens/leaderboardScreen.dart';
 
 import '../../entities/endScreenArguments.dart';
@@ -86,18 +87,22 @@ class _EndScreenState extends State<EndScreen> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
-              decoration: BoxDecoration(gradient: gradient),
+              decoration: BoxDecoration(color: textWhite),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const LogoHeader(),
+                    const SizedBox(
+                      height: 75,
+                    ),
                     SizedBox(
                       width: 0.9 * MediaQuery.of(context).size.width,
                       height: 0.9 * MediaQuery.of(context).size.width,
                       child: Card(
-                        elevation: 10,
-                        color: headerBlue,
+                        elevation: 5,
+                        color: backgroundGreen,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -162,7 +167,7 @@ class _EndScreenState extends State<EndScreen> {
                         },
                         height: 60,
                         minWidth: 250,
-                        color: buttonBlue,
+                        color: buttonGreen,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -172,7 +177,7 @@ class _EndScreenState extends State<EndScreen> {
                                 style: buttonTextStyle,
                               )
                             : const CircularProgressIndicator(
-                                color: textGreen,
+                                color: textWhite,
                               ),
                       ),
                     )

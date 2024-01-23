@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: backgroundBlue,
-        primaryColor: backgroundBlue,
-      ),
+          useMaterial3: true,
+          scaffoldBackgroundColor: backgroundGreen,
+          primaryColor: backgroundGreen,
+          unselectedWidgetColor: textWhite),
       initialRoute: SplashScreen.id,
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),

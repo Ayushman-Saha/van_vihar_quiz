@@ -51,9 +51,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Container(
                   height: 0.8 * MediaQuery.of(context).size.height,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                      gradient: gradient,
-                      borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                      // gradient: gradient,
+                      color: textWhite,
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
                           topRight: Radius.circular(40))),
                   child: Column(
@@ -68,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             "The Van Vihar Quiz",
                             style: GoogleFonts.poppins(
                               textStyle: const TextStyle(fontSize: 42),
-                              color: textWhite,
+                              color: backgroundGreen,
                               fontWeight: FontWeight.bold,
                               // shadows: <Shadow>[
                               //   const Shadow(
@@ -89,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           child: Text(
                             "Play and get a chance to get a free ticket!",
                             style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(color: buttonBlue),
+                              textStyle: const TextStyle(color: buttonGreen),
                               fontWeight: FontWeight.bold,
                               // shadows: <Shadow>[
                               //   const Shadow(
@@ -123,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           },
                           height: 60.0,
                           minWidth: 300.0,
-                          color: buttonBlue,
+                          color: buttonGreen,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -137,6 +138,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Developed by IISER Bhopal',
+                          style: bodyTextStyle.copyWith(color: backgroundGreen),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
                     ],
                   ),
                 ),
